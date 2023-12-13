@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+    <body>
+            <header>
+                <div>
+                    <h1>
+                        <a href="signup.html"> The square</a>
+                    </h1>
+                </div>
+            </header>
+            <section>
+                <h2>SIGN UP</h2>
+                <div>
+                    {% for message in messages %}
+                    <h5>{{message}}</h5>
+                    {% endfor %}
+                </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="text" name="email" placeholder="Email" />
+                    <input type="password" name="password" placeholder="Password" />
+                    <input type="password" name="password2" placeholder="Confirm Password" />
+                    <button type="submit"> Sign up </button>
+
+                </form>
+            </section>
+            <footer>
+            </footer>
+    </body> 
+    
+</html> 
