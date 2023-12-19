@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 import re
 # Create your views here.
@@ -46,3 +47,15 @@ def signup(request):
     
 def accreated(request):
     return render(request, 'core/accreated.html')
+
+
+def signin(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect('connected')
+    else:
+        messages.info(request, 'Wrong information')
+        return redirect('signin')
