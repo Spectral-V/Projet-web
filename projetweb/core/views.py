@@ -48,14 +48,21 @@ def signup(request):
 def accreated(request):
     return render(request, 'core/accreated.html')
 
+def connected(request):
+    return render(request, 'core/connected.html')
 
 def signin(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('connected')
-    else:
-        messages.info(request, 'Wrong information')
-        return redirect('signin')
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['password']
+        
+        user = authenticate(username=username, password=pass1)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('connected')
+        else:
+            messages.error(request, "Wrong Information!!")
+            return redirect('sigin')
+    
+    return render(request, "core/signin.html")
