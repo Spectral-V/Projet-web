@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+import re
 # Create your views here.
-
+def is_valid_email(email):
+      # Define the regex pattern for email validation
+      pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+      return re.match(pattern, email)
+  
 def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -11,6 +16,18 @@ def signup(request):
         password2 = request.POST['password2']
 
         if password == password2:
+            if len(password)<8:
+                messages.info(request, 'Password too short. Minimun 8 characters')
+                return redirect('signup')
+            if not re.findall('[A-Z]', password):
+                messages.info(request, 'Password must contain at least one Cap')
+                return redirect('signup')
+            if not re.findall('[1-9]', password):
+                messages.info(request, 'Password must contain at least one digit')
+                return redirect('signup')
+            if not is_valid_email(email):
+                messages.info(request, 'email invalid')
+                return redirect('signup')
             if User.objects.filter(email=email).exists():
                 messages.info(request, 'Email Taken')
                 return redirect('signup')
