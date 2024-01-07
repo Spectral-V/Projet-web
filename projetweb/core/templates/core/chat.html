@@ -1,0 +1,96 @@
+<!-- HTML template for live search -->
+<input type="text" id="searchInput" placeholder="Search users">
+<div id="userList"></div>
+
+<!-- HTML template for messaging div -->
+<div id="messagingDiv">
+  <!-- Messages will be displayed here -->
+  <div id="messageContainer"></div>
+  <!-- Input for sending messages -->
+  <input type="text" id="messageInput" placeholder="Type your message">
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<!-- AJAX script for live search -->
+<!-- AJAX script for live search -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#searchInput").on("input", function() {
+      // Implement AJAX call to Django view for live search
+      let searchQuery = $("#searchInput").val();
+
+      $.ajax({
+        url: "/search-users/",
+        method: "GET",
+        data: { search_query: searchQuery },
+        dataType: "json",
+        success: function(data) {
+          let userListHtml = "";
+          data.users.forEach(function(user) {
+            userListHtml += `<div onclick="loadMessagingDiv(${user.id})">${user.username}</div>`;
+          });
+          $("#userList").html(userListHtml);
+        },
+        error: function(error) {
+          console.error("Error in live search AJAX call:", error);
+        }
+      });
+    });
+  });
+
+  // Function to load messaging div and messages using AJAX
+  function loadMessagingDiv(userId) {
+    let recipientUserId = userId;
+    // Implement AJAX call to Django view for fetching messages
+    $.ajax({
+      url: `/messaging/${recipientUserId}/`,
+      method: "GET",
+      dataType: "html",
+      success: function(data) {
+        $("#messageContainer").html(data);
+      },
+      error: function(error) {
+        console.error("Error in loading messaging div AJAX call:", error);
+      }
+    });
+  }
+  function loadMessagingDiv(userId) {
+      let recipientUserId = userId;
+      $.ajax({
+        url: `/messaging/${recipientUserId}/`,
+        method: "GET",
+        dataType: "html",
+        success: function(data) {
+          $("#messageContainer").html(data);
+          $("#messageInput").prop('disabled', false);  // Enable message input
+          $("#sendButton").prop('disabled', false);  // Enable send button
+        },
+        error: function(error) {
+          console.error("Error in loading messaging div AJAX call:", error);
+        }
+      });
+    }
+
+  // Function to send messages using AJAX
+  function sendMessage() {
+    // Retrieve the recipient user ID from the messaging div (assuming it's stored there)
+    let recipientUserId = $("#messageContainer").data("recipient-id");
+    
+    // Implement AJAX call to Django view for sending messages
+    let messageText = $("#messageInput").val();
+
+    $.ajax({
+      url: `/send-message/${recipientUserId}/`,
+      method: "POST",
+      data: { message: messageText },
+      dataType: "json",
+      success: function(data) {
+        // Handle success, maybe update the message container
+      },
+      error: function(error) {
+        console.error("Error in sending message AJAX call:", error);
+      }
+    });
+  }
+</script>

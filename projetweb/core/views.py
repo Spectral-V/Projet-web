@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile
+from .models import Profile,Message
 import re
+from django.http import HttpResponse, JsonResponse
+
+
 # Create your views here.
 def is_valid_email(email):
       # Define the regex pattern for email validation
@@ -76,7 +80,7 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return redirect('settings')
+            return redirect('chat')
         else:
             messages.error(request, "Wrong Information!!")
             return redirect('signin')
@@ -112,3 +116,45 @@ def settings(request):
 def logout(request):
     auth.logout(request)
     return redirect('signin')
+
+@login_required
+def chat(request):
+    user_profile = Profile.objects.get(user=request.user)
+    return render(request,'core/chat.html',{'user_profile': user_profile})
+
+
+@login_required(login_url='signin')
+def search_users(request):
+    if request.method == 'GET' and request.is_ajax():
+        query = request.GET.get('search_query', '')
+        users = User.objects.filter(
+            username__icontains=query
+        ).exclude(id=request.user.id)[:10]
+
+        data = [{'id': user.id, 'username': user.username} for user in users]
+        return JsonResponse({'users': data})
+    else:
+        return JsonResponse({'error': 'Invalid request'})
+    
+
+@login_required
+def messaging(request, user_id):
+    selected_user = get_object_or_404(User, id=user_id)
+    messages = Message.objects.filter(
+        Q(sender=request.user.profile, recipient=selected_user.profile) |
+        Q(sender=selected_user.profile, recipient=request.user.profile)
+    ).order_by('date')
+
+    return render(request, 'messaging.html', {'selected_user': selected_user, 'messages': messages})
+
+
+@login_required
+def send_message(request, user_id):
+    recipient = get_object_or_404(Profile, id_user=user_id)
+    
+    if request.method == 'POST':
+        message_text = request.POST.get('message', '')
+        Message.objects.create(sender=request.user.profile, recipient=recipient, message=message_text)
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'error': 'Invalid request'})
