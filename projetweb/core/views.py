@@ -10,7 +10,14 @@ def is_valid_email(email):
       # Define the regex pattern for email validation
       pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
       return re.match(pattern, email)
-  
+
+
+
+def index(request):
+    return render(request, 'core/index.html')
+
+
+
 def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -69,7 +76,7 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return redirect('connected')
+            return redirect('settings')
         else:
             messages.error(request, "Wrong Information!!")
             return redirect('signin')
@@ -100,3 +107,8 @@ def settings(request):
         
         return redirect('settings')
     return render(request, 'core/settings.html', {'user_profile': user_profile})
+
+@login_required(login_url='signin')
+def logout(request):
+    auth.logout(request)
+    return redirect('signin')
