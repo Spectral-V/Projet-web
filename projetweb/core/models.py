@@ -8,7 +8,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
-    profileimg = models.ImageField(upload_to='profile_imgs', default='media/blank-profile.png')
+    profileimg = models.ImageField(upload_to='media/profile_imgs', default='media/profile_imgs/blank-profile.png')
     
     def __str__(self):
         return self.user.username
