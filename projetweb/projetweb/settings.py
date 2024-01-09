@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-8$ttc=n_=#+&!%xup_q*l3%wqi2ve0bzps4=2%zcta136c)wh4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pasteque.alwaysdata.net']
 
 
 # Application definition
