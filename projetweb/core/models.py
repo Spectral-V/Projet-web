@@ -15,10 +15,17 @@ class Profile(models.Model):
         return self.user.username
 
 
+class Room(models.Model):
+    name=models.CharField(max_length=30)
+    room_id=models.AutoField(primary_key=True)
+    def __str__(self):
+        return self.name
+    
+
 class Message(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
-    recipient = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='recipient')
-    message = models.TextField()
+    recipient = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='recipient')
+    message = models.CharField(max_length=3000)
     date = models.DateTimeField(default=datetime.now, blank=True)
     #is_read = models.BooleanField(default=False)
 

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django import http
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile,Message
+from .models import Profile,Message,Room
 import re
 from django.http import HttpResponse, JsonResponse
+
 
 
 # Create your views here.
@@ -121,6 +122,29 @@ def logout(request):
 def chat(request):
     user_profile = Profile.objects.get(user=request.user)
     return render(request,'core/chat.html',{'user_profile': user_profile})
+
+@login_required
+def newroom(request):
+    if request.method == 'POST' :
+        roomname = request.POST['roomname']
+        room = Room.objects.create(name = roomname)
+        room.save
+        return http.HttpResponseRedirect('/room/<{room.name}>')
+    return render(request, 'core/newroom.html')
+
+@login_required
+def room(request,room_id):
+    if request.method == 'POST' :
+        mtext = request.POST['message']
+        user_profile = Profile.objects.get(user=request.user)
+        m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=mtext)
+        m.save()
+    
+    lastMessageId = 0
+    if Message.objects.filter(recipient_id=room_id).order_by('-id').exists():
+        lastMessageId = Message.objects.filter(recipient_id=room_id).order_by('-id')[0].id
+    
+    return render(request, 'core/room.html')
 
 
 @login_required(login_url='signin')
