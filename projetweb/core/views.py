@@ -81,7 +81,7 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return redirect('chat')
+            return redirect('newroom')
         else:
             messages.error(request, "Wrong Information!!")
             return redirect('signin')
@@ -118,10 +118,6 @@ def logout(request):
     auth.logout(request)
     return redirect('signin')
 
-@login_required
-def chat(request):
-    user_profile = Profile.objects.get(user=request.user)
-    return render(request,'core/chat.html',{'user_profile': user_profile})
 
 @login_required
 def newroom(request):
