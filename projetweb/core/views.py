@@ -144,6 +144,18 @@ def room(request,room_id):
     if Message.objects.filter(recipient_id=room_id).order_by('-id').exists():
         lastMessageId = Message.objects.filter(recipient_id=room_id).order_by('-id')[0].id
     
-    context = {'messages': Message.objects.filter(recipient_id=room_id)}
+    context = {
+        'room': Room.objects.get(room_id=room_id),
+        'messages': Message.objects.filter(recipient_id=room_id)}
+
+    
     
     return render(request, 'core/room.html', context)
+
+
+
+def getMessages(request, room_id):
+    room_details = Room.objects.get(room_id=room_id)
+
+    messages = Message.objects.filter(recipient=room_details)
+    return JsonResponse({"messages":list(messages.values())})

@@ -12,9 +12,9 @@ urlpatterns = [
     path('connected', views.connected, name="connected"),
     path('settings', views.settings, name="settings"),
     path('logout', views.logout, name='logout'),
-    path('search-users/', views.search_users, name='search_users'),
-    path('messaging/int:user_id/', views.messaging, name='messaging'),
-    path('send-message/int:user_id/', views.send_message, name='send_message'),
+  
     path('newroom', views.newroom, name='newroom'),
     path('room/<int:room_id>', views.room, name='room'),
+
+    path('getMessages/<int:room_id>/', views.getMessages, name='getMessages'),
 ]
