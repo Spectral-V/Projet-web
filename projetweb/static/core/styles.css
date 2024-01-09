@@ -1,0 +1,200 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Overpass', Arial, Helvetica;
+
+}
+
+@font-face{
+font-family:"Overpass";
+src:url("typos/overpass.ttf") format("truetype");
+}
+body{
+    background-image: url("../img/background.png");
+}
+a:active{
+    text-decoration: none;
+    color: black;
+}
+
+.header-div a{
+    padding: 50px;
+
+
+}
+.header-div{
+    background-color: rgb(106, 42, 104);
+    height: 75px;
+
+}
+
+.div-intro h2{
+    font-size: clamp(46px, 5vw, 100px);
+    font-weight: 900;
+    color: #4e5155;
+    text-align: center;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    padding: 0 15px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+
+
+}
+.div-text{
+    color: #4e5155;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    padding: 0 15px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 40px;
+    width: 40%;
+
+
+}
+
+footer{
+    line-height: 50px;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    background-image: linear-gradient(to bottom, rgb(106, 42, 104), rgba(106, 42, 104, 0.425));
+    width: 100%;
+}
+.btn-1{
+    background-image: linear-gradient(to right, rgb(106, 42, 104),  rgba(106, 42, 104, 0.425));
+    border: none;
+    color: white;
+    padding: 15px 59px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 28px;
+    margin: 10px 530px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+.btn-2{
+    background-image: linear-gradient(to right, rgb(106, 42, 104),  rgba(106, 42, 104, 0.425));
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 28px;
+    margin: 10px 530px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+.btn-3{
+    background-image: linear-gradient(to right, rgb(106, 42, 104),  rgba(106, 42, 104, 0.425));
+    border: none;
+    color: white;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 20px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+.btn-4{
+    border: 2px solid black;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 10px 20px;
+    border-radius: 40px;
+}
+.btn-5{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: none;
+    color: white;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 20px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+.btn-5 a{
+    color: white;
+    text-decoration: none;
+}
+.btn-5 a:hover{
+    color: white;
+    text-decoration: none;
+}
+.btn-5 a:visited{
+    color: white;
+    text-decoration: none;
+}
+.form{
+    border: 2px solid black;
+    color: black;
+    padding: 5px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 530px;
+    border-radius: 40px;
+}
+
+.bio-text{
+    border: none;
+    color: white;
+    padding: 5px 30px;
+    font-size: 16px;
+    margin: 10px 10px;
+    background-color: rgba(64, 64, 64, 0.778);
+
+}
+
+
+.profile-picture{
+    border-radius: 50px;
+}
+
+.little-text{
+    font-size: 13px;
+    font-weight: 900;
+    color: #242425;
+    text-align: center;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.little-text a{
+    text-decoration: none;
+}
+
+#param{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: 2px solid black;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 10px;
+    color: white;
+    border-radius: 10px;
+}
+
+#param div{
+    width: 20%;
+    margin: 10px 10px;
+
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pasteque | Le chat ultime</title>
+    <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
+    
+</head>
+    <body>
+            <header>
+                <div class="header-div">
+                    <a href=""><img width="200" height="75" src="static/img/logo.png" /> </a>
+                </div>
+            </header>
+            <section>
+                <div class="div-intro">
+                    <h2> Avec Pasteque disctuter plus rapidement </h2>
+                </div>
+                <div class="div-text">
+                    <p>
+                        Enfin un lieu où l'on peut discuter entre amis, pour un projet scolaire, pour un jeu video ... 
+                        Où l'on peut passer du temps ensemble et se retrouver
+                    </p>
+                    <p>
+                       Ici les possibilitées sont infinies
+                    </p>
+                </div>
+                <div>
+                    <button onclick="location.href = 'signup'" class="btn-1"> Incris-toi </button>
+                    <button onclick="location.href = 'signin'" class="btn-2"> Connecte-toi </button>
+                </div>
+            </section>
+            <footer>
+                <p>Crée par Victor Murris Rémi Routier...</p>
+            </footer>
+    </body> 
+    
+</html> 
