@@ -137,7 +137,7 @@ def room(request,room_id):
     if request.method == 'POST' :
         mtext = request.POST['message']
         user_profile = Profile.objects.get(user=request.user)
-        m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=mtext)
+        m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
         m.save()
     
     lastMessageId = 0
@@ -156,6 +156,34 @@ def room(request,room_id):
 
 def getMessages(request, room_id):
     room_details = Room.objects.get(room_id=room_id)
+    if request.method == 'GET':
+        messages = Message.objects.filter(recipient=room_details)
+        list = []
+        for mess in messages:
+            list.append({
+                'sender': mess.sender.user.username,
+                'message': mess.message,
+                'date': mess.date.strftime("%d/%m/%Y %H:%M:%S"),
+            })
+    
+    return JsonResponse({"messages":list})
 
-    messages = Message.objects.filter(recipient=room_details)
-    return JsonResponse({"messages":list(messages.values())})
+
+    
+def texttoemoji(text):
+    smileystoemojis = {
+        ":)": "😊",
+        ":(": "☹️",
+        ":O": "😮",
+        ":D": "😀",
+        ":P": "😛",
+        ":|": "😐",
+        ":/": "😕",
+        ";)": "😉",
+        "<3": "❤️",
+        "[pasteque]": "🍉",
+    }
+    for smiley, emoji in smileystoemojis.items():
+        text = re.sub(re.escape(smiley), emoji, text)
+
+    return text

@@ -140,6 +140,22 @@ footer{
     color: white;
     text-decoration: none;
 }
+
+
+.btn-6{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 5px 5px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
 .form{
     border: 2px solid black;
     color: black;
@@ -151,6 +167,7 @@ footer{
     margin: 10px 530px;
     border-radius: 40px;
 }
+
 
 .bio-text{
     border: none;
@@ -192,9 +209,51 @@ footer{
     color: white;
     border-radius: 10px;
 }
-
 #param div{
     width: 20%;
     margin: 10px 10px;
 
+}
+.msg-display{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: 2px solid black;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 10px;
+    color: white;
+    border-radius: 10px;
+}
+
+.msg{
+    height: 400px;
+    overflow: scroll;
+    padding-left: 15px;
+}
+
+.msg-write{
+    border: 2px solid black;
+    color: black;
+    width: 75%;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px 10px;
+    border-radius: 40px;
+}
+
+.msg-sender{
+    width: 100px;
+    display: inline-block;
+}
+.msg-time{
+    display: inline-block;
+    color: #d5d5d5;
+    font-size: 8px;
+    width: 200px;
+}
+
+.msg-text{
+    padding-left: 10px;
 }
