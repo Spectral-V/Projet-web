@@ -17,13 +17,33 @@
                 </div>
             </header>
             <section>
+                <div id="messages-wrapper">
+                    <div id="messages">
+                        {% for message in messages %}
+                            {% if message.user.id == currentuserid %}
+                                <div id="message-{{message.id}}" class="message yours">
+                             {% else %}
+                                <div id="message-{{message.id}}" class="message notyours">
+                            {% endif %}
+                                <div class="message_header">
+                                <div class="message_author">{{ message.sender }}</div>
+                                <div class="message_date">{{ message.date }}</div>
+                                </div>
+                                <div class="message_text">{{ message.message }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                        
                 <div>
                     <form action="" method="POST">
                         {% csrf_token %}
+                        <div class="textarea" id="chat-text" rows="10" readonly> {% for m in messages %} <b> {{ m.username }} </b>: {{ m.message }} <br> {% endfor %} </div> 
                         <input type="text" name="message" class="form" placeholder="msg" />
                         <button type="submit" class="btn-1"> Envoyer un msg </button>
     
                     </form>
+                </div>
             </section>
             <footer>
                 <p>Crée par Victor Murris Rémi Routier...</p>

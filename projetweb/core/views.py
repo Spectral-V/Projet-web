@@ -129,7 +129,7 @@ def newroom(request):
         roomname = request.POST['roomname']
         room = Room.objects.create(name = roomname)
         room.save
-        return http.HttpResponseRedirect('/room/<{room.name}>')
+        return http.HttpResponseRedirect('/room/%i'%room.room_id)
     return render(request, 'core/newroom.html')
 
 @login_required
@@ -144,41 +144,6 @@ def room(request,room_id):
     if Message.objects.filter(recipient_id=room_id).order_by('-id').exists():
         lastMessageId = Message.objects.filter(recipient_id=room_id).order_by('-id')[0].id
     
-    return render(request, 'core/room.html')
-
-
-@login_required(login_url='signin')
-def search_users(request):
-    if request.method == 'GET' and request.is_ajax():
-        query = request.GET.get('search_query', '')
-        users = User.objects.filter(
-            username__icontains=query
-        ).exclude(id=request.user.id)[:10]
-
-        data = [{'id': user.id, 'username': user.username} for user in users]
-        return JsonResponse({'users': data})
-    else:
-        return JsonResponse({'error': 'Invalid request'})
+    context = {'messages': Message.objects.filter(recipient_id=room_id)}
     
-
-@login_required
-def messaging(request, user_id):
-    selected_user = get_object_or_404(User, id=user_id)
-    messages = Message.objects.filter(
-        Q(sender=request.user.profile, recipient=selected_user.profile) |
-        Q(sender=selected_user.profile, recipient=request.user.profile)
-    ).order_by('date')
-
-    return render(request, 'messaging.html', {'selected_user': selected_user, 'messages': messages})
-
-
-@login_required
-def send_message(request, user_id):
-    recipient = get_object_or_404(Profile, id_user=user_id)
-    
-    if request.method == 'POST':
-        message_text = request.POST.get('message', '')
-        Message.objects.create(sender=request.user.profile, recipient=recipient, message=message_text)
-        return JsonResponse({'success': True})
-    else:
-        return JsonResponse({'error': 'Invalid request'})
+    return render(request, 'core/room.html', context)
