@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile,Message,Room
+from .models import Profile,Message,Room, Permission
 import re
 from django.http import HttpResponse, JsonResponse
 
@@ -128,6 +128,8 @@ def newroom(request):
     if request.method == 'POST' :
         roomname = request.POST['roomname']
         room = Room.objects.create(name = roomname)
+        perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
+        perm.save
         room.save
         return http.HttpResponseRedirect('/room/%i'%room.room_id)
     return render(request, 'core/newroom.html')
@@ -135,10 +137,16 @@ def newroom(request):
 @login_required
 def room(request,room_id):
     if request.method == 'POST' :
+        
         mtext = request.POST['message']
         user_profile = Profile.objects.get(user=request.user)
-        m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
-        m.save()
+        roomverif=Room.objects.get(room_id=room_id)
+        perm=Permission.objects.get(user=user_profile,room=roomverif)
+        if perm.level!="mute":
+
+
+            m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
+            m.save()
     
     lastMessageId = 0
     if Message.objects.filter(recipient_id=room_id).order_by('-id').exists():
@@ -153,7 +161,7 @@ def room(request,room_id):
     return render(request, 'core/room.html', context)
 
 
-
+@login_required
 def getMessages(request, room_id):
     room_details = Room.objects.get(room_id=room_id)
     if request.method == 'GET':
@@ -187,3 +195,33 @@ def texttoemoji(text):
         text = re.sub(re.escape(smiley), emoji, text)
 
     return text
+
+@login_required
+def admin(request,iduser,roomid ):
+    upuser=Profile.objects.get(id_user=iduser)
+    uproom=Room.objects.get(room_id=roomid)
+    perm=Permission.objects.get(user=upuser,room=uproom)
+    perm.level="admin"
+    perm.save
+
+@login_required
+def ban(request,iduser,roomid ):
+    upuser=Profile.objects.get(id_user=iduser)
+
+    uproom=Room.objects.get(room_id=roomid)
+    perm=Permission.objects.get(user=upuser,room=uproom)
+    if perm!="owner":
+        perm.level="ban"
+        perm.save
+
+@login_required
+def mute(request,iduser,roomid ):
+    upuser=Profile.objects.get(id_user=iduser)
+    uproom=Room.objects.get(room_id=roomid)
+    perm=Permission.objects.get(user=upuser,room=uproom)
+    if perm!="owner":
+        perm.level="mute"
+        perm.save
+
+
+

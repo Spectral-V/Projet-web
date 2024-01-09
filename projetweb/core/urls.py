@@ -17,4 +17,7 @@ urlpatterns = [
     path('room/<int:room_id>', views.room, name='room'),
 
     path('getMessages/<int:room_id>/', views.getMessages, name='getMessages'),
+    path('admin', views.admin, name='admin'),
+    path('ban', views.ban, name='ban'),
+    path('mute', views.mute, name='mute'),
 ]
