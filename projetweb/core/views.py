@@ -122,12 +122,18 @@ def logout(request):
 @login_required
 def newroom(request):
     if request.method == 'POST' :
-        roomname = request.POST['roomname']
-        room = Room.objects.create(name = roomname)
-        perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
-        perm.save
-        room.save
-        return http.HttpResponseRedirect('/room/%i'%room.room_id)
+        if request.POST['form-type'] == 'croom':
+            roomname = request.POST['roomname']
+            room = Room.objects.create(name = roomname)
+            perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
+            perm.save
+            room.save
+            return http.HttpResponseRedirect('/room/%i'%room.room_id)
+        if request.POST['form-type'] == "jroom":
+            roomid = request.POST['roomid']
+            a = int('0' + roomid)
+            return http.HttpResponseRedirect('/room/%i'%a)
+        
     return render(request, 'core/newroom.html')
 
 @login_required

@@ -20,10 +20,21 @@
                 <div>
                     <form action="" method="POST">
                         {% csrf_token %}
+                        <input type="hidden" name="form-type" value="croom" />
                         <input type="text" name="roomname" class="form" placeholder="Roomname" />
                         <button type="submit" class="btn-1"> Je cree un salon </button>
     
                     </form>
+                </div>
+                <div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form-type" value="jroom" />
+                        <input type="text" name="roomid" class="form" placeholder="Roomid" />
+                        <button type="submit" class="btn-1"> Je rejoins un salon </button>
+    
+                    </form>
+                </div>
             </section>
             <footer>
                 <p>Crée par Victor Murris Rémi Routier...</p>
