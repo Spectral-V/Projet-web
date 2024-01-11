@@ -66,11 +66,6 @@ def signup(request):
     else:
         return render(request, 'core/signup.html')
     
-def accreated(request):
-    return render(request, 'core/accreated.html')
-
-def connected(request):
-    return render(request, 'core/connected.html')
 
 def signin(request):
     if request.method == 'POST':
@@ -94,23 +89,25 @@ def settings(request):
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        
-        if request.FILES.get('image') == None:
-            image = user_profile.profileimg
-            bio = request.POST['bio']
+        if request.POST['form-type'] == 'cc':
+            if request.FILES.get('image') == None:
+                image = user_profile.profileimg
+                bio = request.POST['bio']
 
-            user_profile.profileimg = image
-            user_profile.bio = bio
-            user_profile.save()
-        if request.FILES.get('image') != None:
-            image = request.FILES.get('image')
-            bio = request.POST['bio']
+                user_profile.profileimg = image
+                user_profile.bio = bio
+                user_profile.save()
+            if request.FILES.get('image') != None:
+                image = request.FILES.get('image')
+                bio = request.POST['bio']
 
-            user_profile.profileimg = image
-            user_profile.bio = bio
-            user_profile.save()
+                user_profile.profileimg = image
+                user_profile.bio = bio
+                user_profile.save()
         
-        return redirect('settings')
+            return redirect('settings')
+        if request.POST['form-type'] == 'jr':
+            return redirect('newroom')
     return render(request, 'core/settings.html', {'user_profile': user_profile})
 
 @login_required(login_url='signin')
@@ -220,7 +217,9 @@ def room(request,room_id):
             'room': Room.objects.get(room_id=room_id),
             'mess': Message.objects.filter(recipient_id=room_id),
             'user': u,
-            'perm': Permission.objects.get(user=u, room=room_id)}
+            'perm': Permission.objects.get(user=u, room=room_id),
+            'permr': Permission.objects.filter(room=room_id),
+            }
     
     return render(request, 'core/room.html', context)
 
@@ -274,7 +273,7 @@ def admin(request,iduser,roomid ):
         if perm!="admin":
             perm.level="admin"
             perm.save()
-        else:
+        elif perm=="admin":
             perm.level="normal"
             perm.save()
 

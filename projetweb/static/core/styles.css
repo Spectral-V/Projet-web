@@ -180,7 +180,18 @@ footer{
     cursor: pointer;
     color: white;
 }
-
+.btn-9{
+    background: none;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+    position: relative;
+    bottom: 10px;
+}
 .block-button{
     display: inline-block;
     margin-left: 4px;
@@ -341,4 +352,48 @@ footer{
 .title{
     margin-left: 10px;
 
+}
+
+.member{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: 2px solid black;
+    width: 10%;
+    padding-right: 9%;
+    margin-top: 10px;
+    color: white;
+    border-radius: 10px;
+    float: right;
+}
+
+.member h3{
+    padding: 5px 5px;
+    text-transform: uppercase;
+}
+
+.member h4{
+    padding: 7px 7px;
+    text-transform: uppercase;
+}
+
+.user{
+    text-decoration: underline;
+    padding-bottom: 2px;
+    position: relative;
+    bottom: 10px;
+    display: inline-block;
+}
+.userimg{
+    border-radius: 50px;
+    border: 1px solid black;
+}
+.upp{
+    display: inline-block;
+    margin-left: 14px;
+}
+
+.sett{
+    position: relative;
+    bottom: 20px;
+    margin-left: 65%;
+    padding-left: 100px;
 }

@@ -15,15 +15,26 @@
         <header>
             <div class="header-div">
                 <a href=""><img width="200" height="75" src="{% static 'img/logo.png' %}" /> </a>
+                <a href="settings" class="sett"><img width="40" height="40" src="{% static 'img/setting.png' %}"/> </a>
             </div>
         </header>
             <section>
                 <div>
                     <h2> Parametres d'utilisateur </h2>
                 </div>
+                <div class="left-panel">
+                    <div class="select-room">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form-type" value="jr" />
+                            <button type="submit" class="btn-7"> Vers l'acceuil des salons </button>
+                        </form>
+                    </div>
+                </div>
                 <div id="param">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input type="hidden" name="form-type" value="cc" />
                              <div>
                                 <label for=""> Photo de Profile : </label>
                                 <img width="100" height="100" src="{{user_profile.profileimg.url}}" class="profile-picture"/>
@@ -46,7 +57,7 @@
                 
             </section>
             <footer>
-                <p>Crée par Victor Murris Rémi Routier...</p>
+                <p>Crée par Victor Murris Rémi Routier et Matthis Lahargoue</p>
             </footer>
     </body> 
     
