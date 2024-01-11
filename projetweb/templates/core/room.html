@@ -9,36 +9,37 @@
     <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
-    <script>
+    <script> 
         $(document).ready(function(){
         
-        setInterval(function(){
-            $.ajax({
-                type: 'GET',
-                url : "/getMessages/{{room.room_id}}/",
-                success: function(response){
-        
-                    console.log(response);
-                    $("#display").empty();
-                    for (let i = response.messages.length; i > 0; i--)
-                    {
-                        var temp="<div class='msg-sender'>"+response.messages[i-1].sender+"</div><div class='msg-time'>"+response.messages[i-1].date+"</div><div class='msg-text'>"+response.messages[i-1].message+"</div>";
-                        $("#display").append(temp);
+            setInterval(function(){
+                $.ajax({
+                    type: 'GET',
+                    url : "/getMessages/{{room.room_id}}/",
+                    success: function(response){
+            
+                        console.log(response);
+                        $("#display").empty();
+                        for (let i = response.messages.length; i > 0; i--)
+                        {
+                            var temp="<div class='msg-sender'>"+response.messages[i-1].sender+"</div><div class='msg-time'>"+response.messages[i-1].date+"</div><div class='msg-text'>"+response.messages[i-1].message+"</div>";
+                            $("#display").append(temp);
+                            
+                        }
                         
+                        
+                        
+                    },
+                    error: function(response){
+                        alert('An error occured')
+            
+                       
                     }
-                    
-                    
-                    
-                },
-                error: function(response){
-                    alert('An error occured')
-        
-                   
-                }
-            });
-        },1000);
-})
-</script>
+                });
+            },1000);
+        })
+
+    </script>
     
 </head>
     <body>
@@ -49,16 +50,24 @@
             </header>
             <section>
                 <div>
-                    <h2> {{ room.name }} </h2>
+                    <h2> {{ room.name }} - TAG : {{ room.room_id }} </h2>
                 </div>
                 <div class="msg-display">
                     <div class="msg" id="display">
                     </div>
                     <form action="" method="POST">
                         {% csrf_token %}
+                        <input type="hidden" name="form-type" value="msg" />
                         <input type="text" name="message" class="msg-write" placeholder="msg" />
                         <button type="submit" class="btn-6"> Envoyer un msg </button>
-    
+                    </form>
+                </div>
+                <div class="select-room">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form-type" value="jroom" />
+                        <input type="text" name="roomid" class="form" placeholder="Roomid" />
+                        <button type="submit" class="btn-6"> Je rejoins un salon </button>
                     </form>
                 </div>
             </section>

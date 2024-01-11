@@ -222,6 +222,7 @@ footer{
     margin-top: 10px;
     color: white;
     border-radius: 10px;
+    display: inline-block;
 }
 
 .msg{
@@ -256,4 +257,15 @@ footer{
 
 .msg-text{
     padding-left: 10px;
+}
+
+.select-room{
+    background-color: rgba(64, 64, 64, 0.778);
+    border: 2px solid black;
+    width: 20%;
+    margin-left: 20%;
+    margin-top: 10px;
+    color: white;
+    border-radius: 10px;
+    display: inline-block;
 }

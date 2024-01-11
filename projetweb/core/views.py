@@ -139,26 +139,25 @@ def newroom(request):
 @login_required
 def room(request,room_id):
     if request.method == 'POST' :
+        if request.POST['form-type'] == "msg":
+            mtext = request.POST['message']
+            user_profile = Profile.objects.get(user=request.user)
+            roomverif=Room.objects.get(room_id=room_id)
+            perm=Permission.objects.get(user=user_profile,room=roomverif)
+            if perm.level!="mute":
+
+
+                m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
+                m.save()
+
+        if request.POST['form-type'] == "jroom":
+            roomid = request.POST['roomid']
+            a = int('0' + roomid)
+            return http.HttpResponseRedirect('/room/%i'%a)
         
-        mtext = request.POST['message']
-        user_profile = Profile.objects.get(user=request.user)
-        roomverif=Room.objects.get(room_id=room_id)
-        perm=Permission.objects.get(user=user_profile,room=roomverif)
-        if perm.level!="mute":
-
-
-            m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
-            m.save()
-    
-    lastMessageId = 0
-    if Message.objects.filter(recipient_id=room_id).order_by('-id').exists():
-        lastMessageId = Message.objects.filter(recipient_id=room_id).order_by('-id')[0].id
-    
     context = {
-        'room': Room.objects.get(room_id=room_id),
-        'messages': Message.objects.filter(recipient_id=room_id)}
-
-    
+            'room': Room.objects.get(room_id=room_id),
+            'messages': Message.objects.filter(recipient_id=room_id)}
     
     return render(request, 'core/room.html', context)
 
