@@ -284,18 +284,23 @@ footer{
 }
 
 .msg-sender{
-    width: 100px;
     display: inline-block;
+    width: 100px;
+    text-decoration: underline;
 }
 .msg-time{
     display: inline-block;
     color: #d5d5d5;
     font-size: 8px;
     width: 80px;
+    
 }
 
 .msg-text{
+    
     padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 10px;
 }
 
 
