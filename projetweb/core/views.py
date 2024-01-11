@@ -207,9 +207,12 @@ def room(request,room_id):
             messages.info(request, 'oh no this room does not exist, you should create it')
             return redirect('/room/%i'%room_id)
         
+    u =  Profile.objects.get(user=request.user)
     context = {
             'room': Room.objects.get(room_id=room_id),
-            'mess': Message.objects.filter(recipient_id=room_id)}
+            'mess': Message.objects.filter(recipient_id=room_id),
+            'user': u,
+            'perm': Permission.objects.get(user=u, room=room_id)}
     
     return render(request, 'core/room.html', context)
 
@@ -251,11 +254,18 @@ def texttoemoji(text):
 
 @login_required
 def admin(request,iduser,roomid ):
+    
     upuser=Profile.objects.get(id_user=iduser)
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
-    perm.level="admin"
-    perm.save
+    if perm!="owner":
+        if perm!="admin":
+            perm.level="admin"
+            perm.save
+        else:
+            perm.level="normal"
+            perm.save
+
 
 @login_required
 def ban(request,iduser,roomid ):
@@ -264,8 +274,12 @@ def ban(request,iduser,roomid ):
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
     if perm!="owner":
-        perm.level="ban"
-        perm.save
+        if perm!="ban":
+            perm.level="ban"
+            perm.ban
+        else:
+            perm.level="normal"
+            perm.save
 
 @login_required
 def mute(request,iduser,roomid ):
@@ -273,8 +287,18 @@ def mute(request,iduser,roomid ):
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
     if perm!="owner":
-        perm.level="mute"
-        perm.save
+        if perm!="mute":
+            perm.level="mute"
+            perm.save
+        else:
+            perm.level="normal"
+            perm.save
+
+@login_required
+def deletemessage(request,messageid):
+    Message.objects.filter(message_id=messageid).delete()
+    
+
 
 
 

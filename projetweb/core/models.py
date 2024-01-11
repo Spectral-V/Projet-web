@@ -38,6 +38,7 @@ class Message(models.Model):
     recipient = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='recipient')
     message = models.CharField(max_length=3000)
     date = models.DateTimeField(default=datetime.now, blank=True)
+    message_id=models.AutoField(primary_key=True)
     #is_read = models.BooleanField(default=False)
 
     def __str__(self):
