@@ -170,6 +170,22 @@ footer{
     border-radius: 40px;
 }
 
+.btn-8{
+    background: none;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+}
+
+.block-button{
+    display: inline-block;
+    margin-left: 4px;
+}
+
 .form{
     border: 2px solid black;
     color: black;
@@ -275,7 +291,7 @@ footer{
     display: inline-block;
     color: #d5d5d5;
     font-size: 8px;
-    width: 200px;
+    width: 80px;
 }
 
 .msg-text{
