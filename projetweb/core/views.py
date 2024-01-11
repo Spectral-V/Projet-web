@@ -206,7 +206,7 @@ def room(request,room_id):
                 return http.HttpResponseRedirect('/room/%i'%a)
             messages.info(request, 'oh no this room does not exist, you should create it')
             return redirect('/room/%i'%room_id)
-        
+     
     u =  Profile.objects.get(user=request.user)
     context = {
             'room': Room.objects.get(room_id=room_id),
@@ -228,6 +228,7 @@ def getMessages(request, room_id):
                 'sender': m.sender.user.username,
                 'message': m.message,
                 'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
+                
             })
     
     return JsonResponse({"mess":list})

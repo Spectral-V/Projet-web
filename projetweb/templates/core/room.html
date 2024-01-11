@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script> 
+        $("#btn-s").click(function (){changelim();display_data()});
+        
+        
         $(document).ready(function(){
         
             setInterval(function(){
@@ -20,9 +23,13 @@
             
                         console.log(response);
                         $("#display").empty();
+                        var buttonadmins = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> S </button>  {% endif %} </div>"
+                        var buttonadminb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> B </button>  {% endif %} </div>"
+                        var buttonadminm = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> M </button>  {% endif %} </div>"
+                        var buttonadmina = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> A </button>  {% endif %} </div>"
                         for (let i = response.mess.length; i > 0; i--)
                         {
-                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div><div class='msg-text'>"+response.mess[i-1].message+"</div>";
+                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div>"+buttonadmins+""+buttonadminb+""+buttonadminm+""+buttonadmina+"<div class='msg-text'>"+response.mess[i-1].message+"</div>";
                             $("#display").append(temp);
                             
                         }
