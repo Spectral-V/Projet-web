@@ -162,7 +162,7 @@ def joinroom(a,user,request):
                 
             
                     perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
-                    perm.save
+                    perm.save()
                     return http.HttpResponseRedirect('/room/%i'%a)
                 permi=Permission.objects.get(user=user,room=roomtojoin)
                 if permi.level=="ban":
@@ -185,7 +185,8 @@ def room(request,room_id):
 
                 m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
                 m.save()
-
+        if request.POST['form-type'] == "logout":
+            return redirect('logout')
         if request.POST['form-type'] == "jroom":
             roomid = request.POST['roomid']
             a = int('0' + roomid)
