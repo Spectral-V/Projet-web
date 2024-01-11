@@ -207,6 +207,13 @@ def room(request,room_id):
                 return http.HttpResponseRedirect('/room/%i'%a)
             messages.info(request, 'oh no this room does not exist, you should create it')
             return redirect('/room/%i'%room_id)
+        if request.POST['form-type'] == "croom":
+            roomname = request.POST['roomname']
+            room = Room.objects.create(name = roomname)
+            perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
+            perm.save
+            room.save
+            return http.HttpResponseRedirect('/room/%i'%room.room_id)
      
     u =  Profile.objects.get(user=request.user)
     context = {

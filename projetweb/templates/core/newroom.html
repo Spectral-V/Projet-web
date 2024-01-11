@@ -30,7 +30,7 @@
                     <form action="" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="jroom" />
-                        <input type="text" name="roomid" class="form" placeholder="Roomid" />
+                        <input type="text" name="roomid" class="form" placeholder="Tag du Salon" />
                         <div class="info-in">
                             {% for e in messages %}
                                 <h5>{{e}}</h5>

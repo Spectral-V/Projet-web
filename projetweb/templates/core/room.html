@@ -36,6 +36,14 @@
                             <button type="submit" class="btn-7"> Je rejoins un salon </button>
                         </form>
                     </div>
+                    <div class="select-room">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form-type" value="croom" />
+                            <input type="text" name="roomname" class="form-tag" placeholder="Nom du salon" />
+                            <button type="submit" class="btn-7"> Je crée un salon </button>
+                        </form>
+                    </div>
                     <div class="logout">
                         <form action="" method="POST">
                             {% csrf_token %}
@@ -43,6 +51,7 @@
                             <button type="submit" class="btn-7"> Je me deconecte </button>
                         </form>
                     </div>
+                    
                 </div>
                 <div class="msg-display">
                     <div class="msg" id="display">
@@ -120,7 +129,7 @@
     
                     console.log(response);
                     $("#display").empty();
-                    for (let i = 1; i < response.mess.length; i++)
+                    for (let i = 1; i <= response.mess.length; i++)
                     {
                         var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> S </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> B </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> M </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> A </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
                         $("#display").append(temp);
@@ -146,7 +155,7 @@
         
                         console.log(response);
                         $("#display").empty();
-                        for (let i = 1; i < response.mess.length; i++)
+                        for (let i = 1; i <= response.mess.length; i++)
                         {
                             var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> S </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> B </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> M </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> A </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
                             $("#display").append(temp);
