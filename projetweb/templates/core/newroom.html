@@ -31,9 +31,11 @@
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="jroom" />
                         <input type="text" name="roomid" class="form" placeholder="Roomid" />
-                        {% for e in messages %}
-                        <h5>{{e}}</h5>
-                        {% endfor %}
+                        <div class="info-in">
+                            {% for e in messages %}
+                                <h5>{{e}}</h5>
+                            {% endfor %}
+                        </div>
                         <button type="submit" class="btn-1"> Je rejoins un salon </button>
     
                     </form>

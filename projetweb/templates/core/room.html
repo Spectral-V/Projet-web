@@ -58,6 +58,11 @@
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="jroom" />
                             <input type="text" name="roomid" class="form-tag" placeholder="Tag du Salon" />
+                            <div class="info-in">
+                                {% for e in messages %}
+                                    <h5>{{e}}</h5>
+                                {% endfor %}
+                            </div>
                             <button type="submit" class="btn-7"> Je rejoins un salon </button>
                         </form>
                     </div>
@@ -77,19 +82,6 @@
                         <input type="hidden" name="form-type" value="msg" />
                         <input type="text" name="message" class="msg-write" placeholder="Tapez votre message" />
                         <button type="submit" class="btn-6"> Envoyer un message </button>
-                    </form>
-                </div>
-                <div class="select-room">
-                    
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="form-type" value="jroom" />
-                        <input type="text" name="roomid" class="form" placeholder="Roomid" />
-                        {% for e in messages %}
-                        <h5>{{e}}</h5>
-                        {% endfor %}
-
-                        <button type="submit" class="btn-6"> Je rejoins un salon </button>
                     </form>
                 </div>
             </section>
