@@ -19,4 +19,5 @@ urlpatterns = [
     path('roomadmin', views.admin, name='admin'),
     path('ban', views.ban, name='ban'),
     path('mute', views.mute, name='mute'),
+    path('deletemessage/<int:messageid>', views.deletemessage, name='deletemessage'),
 ]

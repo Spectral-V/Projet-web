@@ -228,6 +228,7 @@ def getMessages(request, room_id):
                 'sender': m.sender.user.username,
                 'message': m.message,
                 'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
+                'id': m.message_id,
                 
             })
     
@@ -296,8 +297,12 @@ def mute(request,iduser,roomid ):
             perm.save
 
 @login_required
-def deletemessage(request,messageid):
-    Message.objects.filter(message_id=messageid).delete()
+def deletemessage(request, messageid):
+    if request.method == 'GET' :
+        mess = Message.objects.get(message_id=messageid)
+        mess.delete()
+    
+    return http.JsonResponse({'status': 'ok'})
     
 
 

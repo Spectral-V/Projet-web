@@ -9,44 +9,7 @@
     <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
-    <script> 
-        $("#btn-s").click(function (){changelim();display_data()});
-        
-        
-        $(document).ready(function(){
-        
-            setInterval(function(){
-                $.ajax({
-                    type: 'GET',
-                    url : "/getMessages/{{room.room_id}}/",
-                    success: function(response){
-            
-                        console.log(response);
-                        $("#display").empty();
-                        var buttonadmins = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> S </button>  {% endif %} </div>"
-                        var buttonadminb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> B </button>  {% endif %} </div>"
-                        var buttonadminm = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> M </button>  {% endif %} </div>"
-                        var buttonadmina = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> A </button>  {% endif %} </div>"
-                        for (let i = response.mess.length; i > 0; i--)
-                        {
-                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div>"+buttonadmins+""+buttonadminb+""+buttonadminm+""+buttonadmina+"<div class='msg-text'>"+response.mess[i-1].message+"</div>";
-                            $("#display").append(temp);
-                            
-                        }
-                        
-                        
-                        
-                    },
-                    error: function(response){
-                        alert('An error occured')
-            
-                       
-                    }
-                });
-            },1000);
-        })
-
-    </script>
+    
     
 </head>
     <body>
@@ -96,5 +59,65 @@
                 <p>Crée par Victor Murris Rémi Routier...</p>
             </footer>
     </body> 
-    
+    <script> 
+        
+
+
+        function delmess(id) {
+            
+            var b = "/deletemessage/"+id+"";
+            $.ajax({
+                type: 'GET',
+                url : b,
+                success: function(data){
+        
+                    
+                    
+                    
+                },
+                error: function(response){
+                    alert('An error occured')
+        
+                   
+                }
+            });
+            
+        }
+        function display_data () {
+            setInterval(function(){
+                $.ajax({
+                    type: 'GET',
+                    url : "/getMessages/{{room.room_id}}/",
+                    success: function(response){
+            
+                        console.log(response);
+                        $("#display").empty();
+                        var buttonadminsdeb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("
+                        var buttonadminsend = ")'> S </button>  {% endif %} </div>"
+                        var buttonadminb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> B </button>  {% endif %} </div>"
+                        var buttonadminm = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> M </button>  {% endif %} </div>"
+                        var buttonadmina = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> A </button>  {% endif %} </div>"
+                        for (let i = response.mess.length; i > 0; i--)
+                        {
+                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div>"+buttonadminsdeb+""+response.mess[i-1].id+""+buttonadminsend+""+buttonadminb+""+buttonadminm+""+buttonadmina+"<div class='msg-text'>"+response.mess[i-1].message+"</div>";
+                            $("#display").append(temp);
+                            
+                        }
+                        
+                        
+                        
+                    },
+                    error: function(response){
+                        alert('An error occured')
+            
+                       
+                    }
+                });
+            },1000);
+        }
+        $(document).ready(function(){
+            display_data()      
+        })
+
+    </script>
 </html> 
