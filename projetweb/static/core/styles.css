@@ -156,6 +156,20 @@ footer{
     border-radius: 40px;
 }
 
+.btn-7{
+    background-image: linear-gradient(to right, rgb(106, 42, 104),  rgba(106, 42, 104, 0.425));
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 5px 5px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
 .form{
     border: 2px solid black;
     color: black;
@@ -200,6 +214,16 @@ footer{
     text-decoration: none;
 }
 
+.info-up{
+   margin-left: 41%; 
+   color: red;
+
+}
+.info-in{
+    margin-left: 41%; 
+ 
+ }
+
 #param{
     background-color: rgba(64, 64, 64, 0.778);
     border: 2px solid black;
@@ -218,7 +242,6 @@ footer{
     background-color: rgba(64, 64, 64, 0.778);
     border: 2px solid black;
     width: 60%;
-    margin-left: 20%;
     margin-top: 10px;
     color: white;
     border-radius: 10px;
@@ -259,13 +282,42 @@ footer{
     padding-left: 10px;
 }
 
-.select-room{
-    background-color: rgba(64, 64, 64, 0.778);
-    border: 2px solid black;
+
+.left-panel{
+    margin-top: 10px;
     width: 20%;
-    margin-left: 20%;
+    float: left;
+}
+.select-room{
     margin-top: 10px;
     color: white;
-    border-radius: 10px;
+    margin-left: 20px;
+}
+.select-room .btn-7{
+    margin-left: 30px;
+
+}
+.logout{
+    width: 150px;
+    padding: 10px 10px;
+    margin-left: 35px;
+    margin-top: 10px;
+    color: white;
+}
+
+.form-tag{
+    border: 2px solid black;
+    color: black;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
     display: inline-block;
+    font-size: 16px;
+    margin: 10px 10px;
+    border-radius: 40px;
+}
+
+.title{
+    margin-left: 10px;
+
 }

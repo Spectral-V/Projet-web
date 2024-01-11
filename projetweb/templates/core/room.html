@@ -49,8 +49,25 @@
                 </div>
             </header>
             <section>
-                <div>
+                <div class="title">
                     <h2> {{ room.name }} - TAG : {{ room.room_id }} </h2>
+                </div>
+                <div class="left-panel">
+                    <div class="select-room">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form-type" value="jroom" />
+                            <input type="text" name="roomid" class="form-tag" placeholder="Tag du Salon" />
+                            <button type="submit" class="btn-7"> Je rejoins un salon </button>
+                        </form>
+                    </div>
+                    <div class="logout">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form-type" value="logout" />
+                            <button type="submit" class="btn-7"> Je me deconecte </button>
+                        </form>
+                    </div>
                 </div>
                 <div class="msg-display">
                     <div class="msg" id="display">
@@ -58,8 +75,8 @@
                     <form action="" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="msg" />
-                        <input type="text" name="message" class="msg-write" placeholder="msg" />
-                        <button type="submit" class="btn-6"> Envoyer un msg </button>
+                        <input type="text" name="message" class="msg-write" placeholder="Tapez votre message" />
+                        <button type="submit" class="btn-6"> Envoyer un message </button>
                     </form>
                 </div>
                 <div class="select-room">

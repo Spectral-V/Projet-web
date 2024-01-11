@@ -18,21 +18,23 @@
             </div>
         </header>
             <section>
+                <div class="title">
                 <h2>CONNEXION</h2>
-                <div>
-                    {% for message in messages %}
-                    <h5>{{message}}</h5>
-                    {% endfor %}
                 </div>
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="text" name="username" class="form" placeholder="Username" />
                     <input type="password" name="password" class="form" placeholder="Password" />
+                    <div class="info-in">
+                        {% for message in messages %}
+                        <h5>{{message}}</h5>
+                        {% endfor %}
+                    </div>
                     <button type="submit" class="btn-1"> Sign In </button>
 
                 </form>
                 <div class="little-text">
-                    <p>pas de compte, pas d'inquiétude,<a href="signup"> inscris toi</a></p>
+                    <p>pas de compte, pas d'inquiétude,<a href="signup"> Inscris toi</a></p>
                 </div>
             </section>
             <footer>

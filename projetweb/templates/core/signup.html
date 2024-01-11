@@ -17,21 +17,32 @@
             </div>
         </header>
             <section>
-                <h2>INSCRISCPTION</h2>
-                <div>
-                    {% for message in messages %}
-                    <h5>{{message}}</h5>
-                    {% endfor %}
-                </div>
+                <h2>INSCRIPTION</h2>
+                
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="text" name="username" class="form" placeholder="Username" />
                     <input type="text" name="email"class="form" placeholder="Email" />
                     <input type="password" name="password" class="form"  placeholder="Password" />
                     <input type="password" name="password2" class="form"  placeholder="Confirm Password" />
+                    <div class="info-up">
+                        {% for message in messages %}
+                        <h5>{{message}}</h5>
+                        {% endfor %}
+                    </div>
                     <button type="submit" class="btn-1"> Incris toi </button>
-
                 </form>
+                <div class="little-text">
+                    <p>déjà de compte, pas d'inquiétude,<a href="signin"> Connecte toi</a></p>
+                </div>
+                <div class="little-text">
+                    <p>Votre mot de passe doit contenir : </p>
+                    <ul>
+                        <li>Au minimun 8 caractères</li>
+                        <li>Une majuscule</li>
+                        <li>Un chiffre</li>
+                    </ul>
+                </div>
             </section>
             <footer>
                 <p>Crée par Victor Murris Rémi Routier...</p>
