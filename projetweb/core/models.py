@@ -23,14 +23,14 @@ class Room(models.Model):
         return self.name
     
 class Permission(models.Model):
-    level = models.CharField(max_length=10,default="normal")
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    level = models.CharField(max_length=10, default="normal")
     
     
     
     def __str__(self):
-        return self.level + self.user.user.username +  self.room.name  
+        return self.user.user.username +  self.room.name  
     
 
 class Message(models.Model):

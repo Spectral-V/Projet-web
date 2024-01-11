@@ -225,10 +225,12 @@ def getMessages(request, room_id):
         list = []
         for m in mess:
             list.append({
+                'senderid': m.sender.id_user,
                 'sender': m.sender.user.username,
                 'message': m.message,
                 'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
                 'id': m.message_id,
+                'roomid': room_id,
                 
             })
     
@@ -263,25 +265,24 @@ def admin(request,iduser,roomid ):
     if perm!="owner":
         if perm!="admin":
             perm.level="admin"
-            perm.save
+            perm.save()
         else:
             perm.level="normal"
-            perm.save
+            perm.save()
 
 
 @login_required
 def ban(request,iduser,roomid ):
     upuser=Profile.objects.get(id_user=iduser)
-
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
     if perm!="owner":
         if perm!="ban":
             perm.level="ban"
-            perm.ban
+            perm.save()
         else:
             perm.level="normal"
-            perm.save
+            perm.save()
 
 @login_required
 def mute(request,iduser,roomid ):
@@ -291,10 +292,11 @@ def mute(request,iduser,roomid ):
     if perm!="owner":
         if perm!="mute":
             perm.level="mute"
-            perm.save
+            perm.save()
         else:
             perm.level="normal"
-            perm.save
+            perm.save()
+    return http.JsonResponse({'status': 'ok'})
 
 @login_required
 def deletemessage(request, messageid):

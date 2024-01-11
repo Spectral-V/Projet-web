@@ -16,8 +16,8 @@ urlpatterns = [
     path('room/<int:room_id>', views.room, name='room'),
 
     path('getMessages/<int:room_id>/', views.getMessages, name='getMessages'),
-    path('roomadmin', views.admin, name='admin'),
-    path('ban', views.ban, name='ban'),
-    path('mute', views.mute, name='mute'),
+    path('adm/<int:iduser>/<int:roomid>', views.admin, name='admin'),
+    path('ban/<int:iduser>/<int:roomid>', views.ban, name='ban'),
+    path('mute/<int:iduser>/<int:roomid>', views.mute, name='mute'),
     path('deletemessage/<int:messageid>', views.deletemessage, name='deletemessage'),
 ]

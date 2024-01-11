@@ -60,8 +60,42 @@
             </footer>
     </body> 
     <script> 
-        
-
+        function admin(uid,rid) {
+            var a = "/adm/"+uid+"/"+rid+"";
+            $.ajax({
+                type: 'GET',
+                url : a,
+                success: function(data){
+                },
+                error: function(data){
+                }
+            });
+            
+        }
+        function ban(uid,rid) {
+            var a = "/ban/"+uid+"/"+rid+"";
+            $.ajax({
+                type: 'GET',
+                url : a,
+                success: function(data){
+                },
+                error: function(data){ 
+                }
+            });
+            
+        }
+        function mute(uid,rid) {
+            var a = "/mute/"+uid+"/"+rid+"";
+            $.ajax({
+                type: 'GET',
+                url : a,
+                success: function(data){
+                },
+                error: function(data){
+                }
+            });
+            
+        }
 
         function delmess(id) {
             
@@ -69,16 +103,9 @@
             $.ajax({
                 type: 'GET',
                 url : b,
-                success: function(data){
-        
-                    
-                    
-                    
+                success: function(data){    
                 },
-                error: function(response){
-                    alert('An error occured')
-        
-                   
+                error: function(data){
                 }
             });
             
@@ -92,14 +119,9 @@
             
                         console.log(response);
                         $("#display").empty();
-                        var buttonadminsdeb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("
-                        var buttonadminsend = ")'> S </button>  {% endif %} </div>"
-                        var buttonadminb = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> B </button>  {% endif %} </div>"
-                        var buttonadminm = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> M </button>  {% endif %} </div>"
-                        var buttonadmina = "<div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8'> A </button>  {% endif %} </div>"
                         for (let i = response.mess.length; i > 0; i--)
                         {
-                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div>"+buttonadminsdeb+""+response.mess[i-1].id+""+buttonadminsend+""+buttonadminb+""+buttonadminm+""+buttonadmina+"<div class='msg-text'>"+response.mess[i-1].message+"</div>";
+                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> S </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> B </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> M </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> A </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
                             $("#display").append(temp);
                             
                         }
