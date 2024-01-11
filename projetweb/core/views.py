@@ -132,9 +132,45 @@ def newroom(request):
         if request.POST['form-type'] == "jroom":
             roomid = request.POST['roomid']
             a = int('0' + roomid)
-            return http.HttpResponseRedirect('/room/%i'%a)
+            user=Profile.objects.get(user=request.user)
+            
+            if Room.objects.filter(room_id=a).exists():
+                roomtojoin=Room.objects.get(room_id=a)
+                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
+                
+            
+                    perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
+                    perm.save
+                    
+                permi=Permission.objects.get(user=user,room=roomtojoin)
+                if permi.level=="ban":
+                    messages.info(request, 'Too bad, you are ban from this room')
+                    return redirect('newroom')
+                return http.HttpResponseRedirect('/room/%i'%a)
+            messages.info(request, 'oh no this room does not exist, you should create it')
+            return redirect('newroom')
+            
         
     return render(request, 'core/newroom.html')
+
+def joinroom(a,user,request):
+            
+            roomtojoin=Room.objects.get(room_id=a)
+            if Room.objects.filter(room_id=a).exists():
+
+                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
+                
+            
+                    perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
+                    perm.save
+                    return http.HttpResponseRedirect('/room/%i'%a)
+                permi=Permission.objects.get(user=user,room=roomtojoin)
+                if permi.level=="ban":
+                    messages.info(request, 'Too bad, you are ban from this room')
+                    return redirect('core/room.html')
+                
+            messages.info(request, 'oh no this room does not exist, you should create it')
+            return redirect('core/newroom.html')
 
 @login_required
 def room(request,room_id):
@@ -144,7 +180,7 @@ def room(request,room_id):
             user_profile = Profile.objects.get(user=request.user)
             roomverif=Room.objects.get(room_id=room_id)
             perm=Permission.objects.get(user=user_profile,room=roomverif)
-            if perm.level!="mute":
+            if perm.level!="mute" and perm.level!="ban":
 
 
                 m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
@@ -153,11 +189,27 @@ def room(request,room_id):
         if request.POST['form-type'] == "jroom":
             roomid = request.POST['roomid']
             a = int('0' + roomid)
-            return http.HttpResponseRedirect('/room/%i'%a)
+            user=Profile.objects.get(user=request.user)
+            
+            if Room.objects.filter(room_id=a).exists():
+                roomtojoin=Room.objects.get(room_id=a)
+                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
+                
+            
+                    perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
+                    perm.save
+                    
+                permi=Permission.objects.get(user=user,room=roomtojoin)
+                if permi.level=="ban":
+                    messages.info(request, 'Too bad, you are ban from this room')
+                    return redirect('/room/%i'%room_id)
+                return http.HttpResponseRedirect('/room/%i'%a)
+            messages.info(request, 'oh no this room does not exist, you should create it')
+            return redirect('/room/%i'%room_id)
         
     context = {
             'room': Room.objects.get(room_id=room_id),
-            'messages': Message.objects.filter(recipient_id=room_id)}
+            'mess': Message.objects.filter(recipient_id=room_id)}
     
     return render(request, 'core/room.html', context)
 
@@ -166,16 +218,16 @@ def room(request,room_id):
 def getMessages(request, room_id):
     room_details = Room.objects.get(room_id=room_id)
     if request.method == 'GET':
-        messages = Message.objects.filter(recipient=room_details)
+        mess = Message.objects.filter(recipient=room_details)
         list = []
-        for mess in messages:
+        for m in mess:
             list.append({
-                'sender': mess.sender.user.username,
-                'message': mess.message,
-                'date': mess.date.strftime("%d/%m/%Y %H:%M:%S"),
+                'sender': m.sender.user.username,
+                'message': m.message,
+                'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
             })
     
-    return JsonResponse({"messages":list})
+    return JsonResponse({"mess":list})
 
 
     

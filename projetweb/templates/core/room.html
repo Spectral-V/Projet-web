@@ -20,9 +20,9 @@
             
                         console.log(response);
                         $("#display").empty();
-                        for (let i = response.messages.length; i > 0; i--)
+                        for (let i = response.mess.length; i > 0; i--)
                         {
-                            var temp="<div class='msg-sender'>"+response.messages[i-1].sender+"</div><div class='msg-time'>"+response.messages[i-1].date+"</div><div class='msg-text'>"+response.messages[i-1].message+"</div>";
+                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div><div class='msg-text'>"+response.mess[i-1].message+"</div>";
                             $("#display").append(temp);
                             
                         }
@@ -63,10 +63,15 @@
                     </form>
                 </div>
                 <div class="select-room">
+                    
                     <form action="" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="jroom" />
                         <input type="text" name="roomid" class="form" placeholder="Roomid" />
+                        {% for e in messages %}
+                        <h5>{{e}}</h5>
+                        {% endfor %}
+
                         <button type="submit" class="btn-6"> Je rejoins un salon </button>
                     </form>
                 </div>
