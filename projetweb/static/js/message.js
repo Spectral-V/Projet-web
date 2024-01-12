@@ -1,3 +1,5 @@
+
+//function to change the open for a room
 function openandclose(rid) {
     var a = "/openandclose/"+rid+"";
     $.ajax({
@@ -12,7 +14,7 @@ function openandclose(rid) {
     });
 }
 
-
+//function to change the permission in a room for an user make admin if other than admin and normal if admin
 function admin(uid,rid) {
     var a = "/adm/"+uid+"/"+rid+"";
     $.ajax({
@@ -26,6 +28,7 @@ function admin(uid,rid) {
     });
     
 }
+//function to change the permission in a room for an user ban if unban and unban if ban
 function ban(uid,rid) {
     var a = "/ban/"+uid+"/"+rid+"";
     $.ajax({
@@ -39,6 +42,7 @@ function ban(uid,rid) {
     });
     
 }
+//function to change the permission in a room for an user mute if unmute and unmute if mute
 function mute(uid,rid) {
     var a = "/mute/"+uid+"/"+rid+"";
     $.ajax({
@@ -53,6 +57,7 @@ function mute(uid,rid) {
     
 }
 
+//function to delete a message with it's id from the table
 function delmess(id) {
     
     var b = "/deletemessage/"+id+"";
@@ -67,6 +72,7 @@ function delmess(id) {
     });
     
 }
+//display the message for a specifique room
 function display_data () {
     $.ajax({
         type: 'GET',
@@ -111,6 +117,5 @@ function display_data () {
 }
 $(document).ready(function(){
     display_data()
-    
     
 })

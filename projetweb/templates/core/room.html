@@ -20,15 +20,19 @@
                 </div>
             </header>
             <section>
+                <!--Name and tag of the room-->
                 <div class="title">
                     <h2> {{ room.name }} - TAG : {{ room.room_id }} {% if perm.level == "owner"  %} - Open Room : 
+                        <!--Toggle switch for the owner to close the room-->
                         <label class="switch">
                             <input  type="checkbox" value="YES" id="open" name="lopen" onclick="openandclose({{room.room_id}})" {% if room.open == "yes" %} checked {% endif %} >
                             <span class="slider round"></span>
                         </label>
                     {% endif %}</h2>
                 </div>
+                <!--Left panel to change room or create another one or logout-->
                 <div class="left-panel">
+                    <!--Join room-->
                     <div class="select-room">
                         <form action="" method="POST">
                             {% csrf_token %}
@@ -42,6 +46,7 @@
                             <button type="submit" class="btn-7"> Join a room </button>
                         </form>
                     </div>
+                    <!-- Create new room -->
                     <div class="select-room">
                         <form action="" method="POST">
                             {% csrf_token %}
@@ -60,6 +65,7 @@
                     </div>
                     
                 </div>
+                <!--Display the message from the room-->
                 <div class="msg-display">
                     <div class="msg" id="display">
                     </div>
@@ -70,6 +76,7 @@
                         <button type="submit" class="btn-6"> Send a text </button>
                     </form>
                 </div>
+                <!--Display the users who has a permission in this room-->
                 <div class="member">
                     <h3> Members : </h3>
                     {% for p in permr %}
@@ -84,6 +91,7 @@
                             {% if p.level == "admin" %}
                                 <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
                                  <div class="user"> {{p.user}} </div>
+                                 <!--Button for admin and owner-->
                                  {% if perm.level == "owner" or perm.level == "admin" %}
                                  <div class='block-button'>
                                     <button id="btn-s" class="btn-9" onclick="mute({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/mute.png' %}" width='10' height='10' alt='submit' /></button>
@@ -101,6 +109,7 @@
                             {% if p.level == "normal" %}
                                 <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
                                 <div class="user"> {{p.user}} </div>
+                                <!--Button for admin and owner-->
                                 {% if perm.level == "owner" or perm.level == "admin" %}
                                     <div class='block-button'>
                                             <button id="btn-s" class="btn-9" onclick="mute({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/mute.png' %}" width='10' height='10' alt='submit' /></button>
@@ -118,6 +127,7 @@
                 <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>
             </footer>
     </body> 
+    <!--Script to display msg-->
     <script>
         let room_id = {{room.room_id}} ;
         function display_mess(response) {
@@ -140,5 +150,6 @@
         }
         
     </script>
+    <!--Script-->
     <script src="{% static 'js/message.js' %}"></script>
 </html> 
