@@ -246,6 +246,7 @@ def texttoemoji(text):
         "[pasteque]": "🍉",
         "<": "&lsaquo;",
         ">": "&rsaquo;",
+        "[discard]": "<a href='http://www.alban.alwaysdata.net/discard/'>discard.com</a>"
     }
     for smiley, emoji in smileystoemojis.items():
         text = re.sub(re.escape(smiley), emoji, text)

@@ -84,7 +84,7 @@
                             {% if p.level == "admin" %}
                                 <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
                                  <div class="user"> {{p.user}} </div>
-                                 {% if perm.level == "owner" %}
+                                 {% if perm.level == "owner" or perm.level == "admin" %}
                                  <div class='block-button'>
                                     <button id="btn-s" class="btn-9" onclick="mute({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/mute.png' %}" width='10' height='10' alt='submit' /></button>
                                 </div>
