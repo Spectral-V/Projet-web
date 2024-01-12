@@ -64,7 +64,7 @@ def signup(request):
             aler.info(request, 'Password Not Matching')
             return redirect('signup')
     else:
-        return render(request, 'core/signup.html')
+        return render(request, 'core/signup.html',{'alers': aler.get_messages(request)})
     
 
 def signin(request):
@@ -81,7 +81,7 @@ def signin(request):
             aler.error(request, "Wrong Information!!")
             return redirect('signin')
     
-    return render(request, "core/signin.html")
+    return render(request, "core/signin.html",{'alers': aler.get_messages(request)})
 
 
 @login_required(login_url='signin')
@@ -150,7 +150,7 @@ def newroom(request):
             return redirect('newroom')
             
         
-    return render(request, 'core/newroom.html')
+    return render(request, 'core/newroom.html',{'alers': aler.get_messages(request)})
 
 
 
@@ -209,7 +209,7 @@ def room(request,room_id):
             'permr': Permission.objects.filter(room=room_id),
             }
     
-    return render(request, 'core/room.html', context)
+    return render(request, 'core/room.html', context,{'alers': aler.get_messages(request)})
 
 
 @login_required
