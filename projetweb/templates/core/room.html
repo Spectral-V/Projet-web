@@ -63,6 +63,17 @@
                             
                         </form>
                     </div>
+                    <!--Display the room where the user already went-->
+                    <div class="roomlist">
+                        <h3>Your Room :</h3>
+                        {% for p in permu %}
+                                {% if p.level != "ban" %}
+                                <div class="roomcontainer">
+                                <a class="btn-10" href="/room/{{p.room.room_id}}"> {{p.room.name}} </a>
+                                </div>
+                                {% endif %}
+                        {% endfor %}
+                    </div>
                     
                 </div>
                 <!--Display the message from the room-->
@@ -122,51 +133,7 @@
                             {% endif %}
                     {% endfor %}
                 </div>
-                <div class="roomlist">
-                    <h3> Room : </h3>
-                    {% for p in permr %}
-                            {% if p.level == "owner" %}
-                                <h4> Owner : </h4>
-                                <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
-                                <div class="user"> {{p.user}} </div>
-                            {% endif %}
-                    {% endfor %}
-                    <h4> Users: </h4>
-                    {% for p in permr %}
-                            {% if p.level == "admin" %}
-                                <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
-                                 <div class="user"> {{p.user}} </div>
-                                 <!--Button for admin and owner-->
-                                 {% if perm.level == "owner" or perm.level == "admin" %}
-                                 <div class='block-button'>
-                                    <button id="btn-s" class="btn-9" onclick="mute({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/mute.png' %}" width='10' height='10' alt='submit' /></button>
-                                </div>
-                                <div class='block-button'>
-                                    <button id="btn-s" class="btn-9" onclick="ban({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/ban.png' %}" width='10' height='10' alt='submit' /> </button>
-                                </div>
-                                <div class='block-button'>
-                                    <button id="btn-s" class="btn-9" onclick="admin({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/up.png' %}" width='10' height='10' alt='submit' /> </button>  
-                                </div>
-                                {% endif %}
-                            {% endif %}
-                    {% endfor %}
-                    {% for p in permr %}
-                            {% if p.level == "normal" %}
-                                <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
-                                <div class="user"> {{p.user}} </div>
-                                <!--Button for admin and owner-->
-                                {% if perm.level == "owner" or perm.level == "admin" %}
-                                    <div class='block-button'>
-                                            <button id="btn-s" class="btn-9" onclick="mute({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/mute.png' %}" width='10' height='10' alt='submit' /></button>
-                                    <div class='block-button'>
-                                            <button id="btn-s" class="btn-9" onclick="ban({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/ban.png' %}" width='10' height='10' alt='submit' /> </button>
-                                    <div class='block-button'>
-                                            <button id="btn-s" class="btn-9" onclick="admin({{p.user.id_user}},{{p.room.room_id}})"> <img src="{% static 'img/up.png' %}" width='10' height='10' alt='submit' /> </button>
-                                        
-                                {% endif %}
-                            {% endif %}
-                    {% endfor %}
-                </div>
+                
             </section>
             <footer>
                 <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>

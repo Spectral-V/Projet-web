@@ -47,6 +47,16 @@
     
                     </form>
                 </div>
+                <div class="roomlist">
+                    <h3>Your Room :</h3>
+                    {% for p in permu %}
+                            {% if p.level != "ban" %}
+                            <div class="roomcontainer">
+                            <a class="btn-10" href="/room/{{p.room.room_id}}"> {{p.room.name}} </a>
+                            </div>
+                            {% endif %}
+                    {% endfor %}
+                </div>
             </section>
             <footer>
                 <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>

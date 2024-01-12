@@ -1,4 +1,3 @@
-
 //function to change the open for a room
 function openandclose(rid) {
     var a = "/openandclose/"+rid+"";

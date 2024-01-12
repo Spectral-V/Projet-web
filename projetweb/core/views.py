@@ -351,7 +351,7 @@ def openandclose(request, roomid):
         
     
     return http.JsonResponse({'status': 'ok'})
-    
+
 
 
 

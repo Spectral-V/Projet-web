@@ -192,6 +192,19 @@ footer{
     position: relative;
     bottom: 10px;
 }
+.btn-10{
+    background: none;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    color: black;
+    bottom: 10px;
+    width: 70px;
+    text-decoration: underline;
+    margin: 5px 5px;
+    display: block;
+}
 .block-button{
     display: inline-block;
     margin-left: 4px;
@@ -423,6 +436,9 @@ footer{
     bottom: 0;
     background-color: #ccc;
     -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -o-transition: .4s;
+    -ms-transition: .4s;
     transition: .4s;
   }
   
@@ -435,6 +451,9 @@ footer{
     bottom: 4px;
     background-color: white;
     -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -o-transition: .4s;
+    -ms-transition: .4s;
     transition: .4s;
   }
   
@@ -449,6 +468,8 @@ footer{
   input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
+    -o-transform: translateX(26px);
+    -moz-transform: translateX(26px);
     transform: translateX(26px);
   }
   
@@ -460,3 +481,19 @@ footer{
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .roomlist {
+    width: 120px;
+    padding: 10px 10px;
+    height: 200px;
+    margin-left: 35px;
+    margin-top: 10px;
+    color: black;
+    overflow: scroll;
+
+}
+
+.roomcontainer {
+    width: 69px;
+
+}
