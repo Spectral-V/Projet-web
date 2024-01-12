@@ -21,7 +21,12 @@
             </header>
             <section>
                 <div class="title">
-                    <h2> {{ room.name }} - TAG : {{ room.room_id }} </h2>
+                    <h2> {{ room.name }} - TAG : {{ room.room_id }} {% if perm.level == "owner"  %} - Open Room : 
+                        <label class="switch">
+                            <input  type="checkbox" value="YES" id="open" name="lopen" onclick="openandclose({{room.room_id}})" {% if room.open == "yes" %} checked {% endif %} >
+                            <span class="slider round"></span>
+                        </label>
+                    {% endif %}</h2>
                 </div>
                 <div class="left-panel">
                     <div class="select-room">
@@ -49,11 +54,8 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="logout" />
-                            <button type="submit" class="btn-7"> I log out </button>
-                            {% if perm.level == "owner"  %}
-                                                <a>room open :</a>
-                                                <input  type="checkbox" value="YES" id="open" name="lopen" onclick="openandclose({{room.room_id}})" {% if room.open == "yes" %} checked {% endif %} >
-                             {% endif %}
+                            <button type="submit" class="btn-7"> Je me deconecte </button>
+                            
                         </form>
                     </div>
                     
@@ -116,137 +118,27 @@
                 <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>
             </footer>
     </body> 
-    <script> 
-        function openandclose(rid) {
-            var a = "/openandclose/"+rid+"";
-            $.ajax({
-                type: 'GET',
-                url : a,
-                success: function(data){
+    <script>
+        let room_id = {{room.room_id}} ;
+        function display_mess(response) {
+            for (let i = 1; i <= response.mess.length; i++)
+                {
+                    var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> <img src='{% static 'img/trash.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/ban.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/mute.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/up.png' %}' width='10' height='10' alt='admin' title='admin'/> </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
+                    $("#display").append(temp);
+                    
+                }
+        }
+        function display_mess_1 (response) {
+            for (let i = 1; i <= response.mess.length; i++)
+            {
+                var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> <img src='{% static 'img/trash.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/ban.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/mute.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/up.png' %}' width='10' height='10' alt='admin' title='admin'/> </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
+                $("#display").append(temp);
+                $("#display").scrollTop($("#display")[0].scrollHeight);
                 
-                },
-                error: function(data){
-                  
-                }
-            });
+                
+            }
         }
-    
-
-        function admin(uid,rid) {
-            var a = "/adm/"+uid+"/"+rid+"";
-            $.ajax({
-                type: 'GET',
-                url : a,
-                success: function(data){
-                    console.log(data) 
-                },
-                error: function(data){
-                }
-            });
-            
-        }
-        function ban(uid,rid) {
-            var a = "/ban/"+uid+"/"+rid+"";
-            $.ajax({
-                type: 'GET',
-                url : a,
-                success: function(data){
-                    console.log(data) 
-                },
-                error: function(data){ 
-                }
-            });
-            
-        }
-        function mute(uid,rid) {
-            var a = "/mute/"+uid+"/"+rid+"";
-            $.ajax({
-                type: 'GET',
-                url : a,
-                success: function(data){
-                    console.log(data) 
-                },
-                error: function(data){
-                }
-            });
-            
-        }
-
-        function delmess(id) {
-            
-            var b = "/deletemessage/"+id+"";
-            $.ajax({
-                type: 'GET',
-                url : b,
-                success: function(data){ 
-                    console.log(data)   
-                },
-                error: function(data){
-                }
-            });
-            
-        }
-        function display_data () {
-            $.ajax({
-                type: 'GET',
-                url : "/getMessages/{{room.room_id}}/",
-                success: function(response){
-    
-                    console.log(response);
-                    $("#display").empty();
-                    for (let i = 1; i <= response.mess.length; i++)
-                    {
-                        var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> <img src='{% static 'img/trash.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/ban.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/mute.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/up.png' %}' width='10' height='10' alt='admin' title='admin'/> </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
-                        $("#display").append(temp);
-                        $("#display").scrollTop($("#display")[0].scrollHeight);
-                        
-                        
-                    }
-                    
-                    
-                    
-                },
-                error: function(response){
-                    alert('An error occured')
-        
-                   
-                }
-            });
-            setInterval(function(){
-                $.ajax({
-                    type: 'GET',
-                    url : "/getMessages/{{room.room_id}}/",
-                    success: function(response){
-        
-                        console.log(response);
-                        $("#display").empty();
-                        for (let i = 1; i <= response.mess.length; i++)
-                        {
-                            var temp="<div class='msg-sender'>"+response.mess[i-1].sender+"</div><div class='msg-time'>"+response.mess[i-1].date+"</div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='delmess("+response.mess[i-1].id+")'> <img src='{% static 'img/trash.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button id='btn-s' class='btn-8' onclick='ban("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/ban.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div> <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='mute("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/mute.png' %}' width='10' height='10' alt='submit' /> </button>  {% endif %} </div>  <div class='block-button'>{% if perm.level == 'owner' %}  <button class='btn-8' onclick='admin("+response.mess[i-1].senderid+","+response.mess[i-1].roomid+")'> <img src='{% static 'img/up.png' %}' width='10' height='10' alt='admin' title='admin'/> </button>  {% endif %} </div> <div class='msg-text'>"+response.mess[i-1].message+"</div>";
-                            $("#display").append(temp);
-                            
-                            
-                        }
-                        
-                        
-                        
-                    },
-                    error: function(response){
-                        alert('An error occured')
-            
-                       
-                    }
-                });
-            
-            
-            },1000);
-        
-        }
-        $(document).ready(function(){
-            display_data()
-            
-            
-        })
         
     </script>
+    <script src="{% static 'js/message.js' %}"></script>
 </html> 

@@ -206,9 +206,10 @@ def room(request,room_id):
             'user': u,
             'perm': Permission.objects.get(user=u, room=room_id),
             'permr': Permission.objects.filter(room=room_id),
+            'alers': aler.get_messages(request),
             }
     
-    return render(request, 'core/room.html', context,{'alers': aler.get_messages(request)})
+    return render(request, 'core/room.html', context)
 
 
 @login_required
