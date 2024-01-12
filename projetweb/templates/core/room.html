@@ -37,7 +37,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="jroom" />
-                            <input type="text" name="roomid" class="form-tag" placeholder="Tag du Salon" />
+                            <input type="text" name="roomid" class="form-tag" placeholder="Room TAG" />
                             <div class="info-in">
                                 {% for e in alers %}
                                     <h5>{{e}}</h5>
@@ -51,7 +51,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="croom" />
-                            <input type="text" name="roomname" class="form-tag" placeholder="Nom du salon" />
+                            <input type="text" name="roomname" class="form-tag" placeholder="Room Name" />
                             <button type="submit" class="btn-7"> Create a room </button>
                         </form>
                     </div>
@@ -83,7 +83,7 @@
                     <form action="" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="msg" />
-                        <input type="text" name="message" class="msg-write" placeholder="Tapez votre message" />
+                        <input type="text" name="message" class="msg-write" placeholder="Write your text" />
                         <button type="submit" class="btn-6"> Send a text </button>
                     </form>
                 </div>
