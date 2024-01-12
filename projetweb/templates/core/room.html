@@ -39,7 +39,7 @@
                                     <h5>{{e}}</h5>
                                 {% endfor %}
                             </div>
-                            <button type="submit" class="btn-7"> I join a room </button>
+                            <button type="submit" class="btn-7"> Join a room </button>
                         </form>
                     </div>
                     <div class="select-room">
@@ -47,14 +47,14 @@
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="croom" />
                             <input type="text" name="roomname" class="form-tag" placeholder="Nom du salon" />
-                            <button type="submit" class="btn-7"> I create a room </button>
+                            <button type="submit" class="btn-7"> Create a room </button>
                         </form>
                     </div>
                     <div class="logout">
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="logout" />
-                            <button type="submit" class="btn-7"> Je me deconecte </button>
+                            <button type="submit" class="btn-7"> Logout </button>
                             
                         </form>
                     </div>
