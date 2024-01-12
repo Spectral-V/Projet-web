@@ -373,6 +373,7 @@ footer{
 .member h4{
     padding: 7px 7px;
     text-transform: uppercase;
+    overflow: scroll;
 }
 
 .user{

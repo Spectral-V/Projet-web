@@ -9,7 +9,6 @@ import re
 from django.http import HttpResponse, JsonResponse
 
 
-
 # Create your views here.
 def is_valid_email(email):
       # Define the regex pattern for email validation
