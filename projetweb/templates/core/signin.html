@@ -14,7 +14,7 @@
     <body>
         <header>
             <div class="header-div">
-                <a href=""><img width="200" height="75" src="{% static 'img/logo.png' %}" /> </a>
+                <a href="http://pasteque.alwaysdata.net"><img width="200" height="75" src="{% static 'img/logo.png' %}" /> </a>
             </div>
         </header>
             <section>
@@ -27,13 +27,15 @@
                     <input type="text" name="username" class="form" placeholder="Username" />
                     <input type="password" name="password" class="form" placeholder="Password" />
                     <!--Display of the info in case of wrong password or username entered-->
-                    <div class="info-in">
+                    <div>
                         {% for e in alers %}
+                        <div class="info-in">
                         <h5>{{e}}</h5>
+                        </div>
                         {% endfor %}
                     </div>
                     <!--Send the data from username and password-->
-                    <button type="submit" class="btn-1"> Sign In </button>
+                    <button type="submit" class="btn-13"> Sign In </button>
 
                 </form>
                 <!--Go to signup if no account-->

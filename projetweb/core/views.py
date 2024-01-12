@@ -43,6 +43,8 @@ def signup(request):
                 return redirect('signup')
             if not is_valid_email(email):
                 aler.info(request, 'email invalid')
+            if re.findall('<', username) or re.findall('>', username):
+                aler.info(request, 'username invalid')
                 return redirect('signup')
             if User.objects.filter(email=email).exists():
                 aler.info(request, 'Email Taken')

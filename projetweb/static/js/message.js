@@ -85,10 +85,7 @@ function display_data () {
             
             
         },
-        error: function(response){
-            alert('An error occured')
-
-           
+        error: function(response){  
         }
     });
     setInterval(function(){
@@ -103,10 +100,7 @@ function display_data () {
                 
                 
             },
-            error: function(response){
-                alert('An error occured')
-    
-               
+            error: function(response){ 
             }
         });
     

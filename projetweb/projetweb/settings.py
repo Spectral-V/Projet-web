@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-8$ttc=n_=#+&!%xup_q*l3%wqi2ve0bzps4=2%zcta136c)wh4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['pasteque.alwaysdata.net','127.0.0.1']
 
