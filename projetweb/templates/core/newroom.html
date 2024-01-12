@@ -35,7 +35,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="croom" />
-                            <input type="text" name="roomname" class="form-2" placeholder="Nom du Salon" />
+                            <input type="text" name="roomname" class="form-2" placeholder="Room Name" />
                             <!--Send the data from name-->
                             <button type="submit" class="btn-12"> Create a room </button>
         
@@ -46,7 +46,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="jroom" />
-                            <input type="text" name="roomid" class="form-2" placeholder="Tag du Salon" />
+                            <input type="text" name="roomid" class="form-2" placeholder="Room TAG" />
                             <div class="info-in">
                                 <!--Display of the info in case of ban or bad id-->
                                 {% for e in alers %}
