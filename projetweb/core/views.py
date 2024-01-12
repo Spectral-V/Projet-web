@@ -222,6 +222,7 @@ def room(request,room_id):
             'perm': Permission.objects.get(user=u, room=room_id),
             'permr': Permission.objects.filter(room=room_id),
             'alers': aler.get_messages(request),
+            'permu': Permission.objects.filter(user=u),
             }
     
     return render(request, 'core/room.html', context)
