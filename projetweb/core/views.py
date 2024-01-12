@@ -9,9 +9,9 @@ import re
 from django.http import HttpResponse, JsonResponse
 
 
-# Create your views here.
+
 def is_valid_email(email):
-      # Define the regex pattern for email validation
+      # check if the mail has @ and .
       pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
       return re.match(pattern, email)
 
@@ -23,11 +23,13 @@ def index(request):
 
 
 def signup(request):
+    #create an account
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+        # get the different post from signup.html
 
         if password == password2:
             if len(password)<8:
@@ -48,13 +50,14 @@ def signup(request):
             elif User.objects.filter(username=username).exists():
                 aler.info(request, 'Username Taken')
                 return redirect('signup')
+
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-            #log user in and redirect to settings page
+            #create a user
                 user_login = auth.authenticate(username=username, password=password)
                 auth.login(request, user_login)
-            #create a Profile object for the new user
+            #create a Profile 
                 user_model = User.objects.get(username=username)
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
@@ -67,6 +70,7 @@ def signup(request):
     
 
 def signin(request):
+    #to register
     if request.method == 'POST':
         username = request.POST['username']
         pass1 = request.POST['password']
@@ -85,6 +89,7 @@ def signin(request):
 
 @login_required(login_url='signin')
 def settings(request):
+    #allow you to put a profile picture (and to change your bio even if it s useless)
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
@@ -111,14 +116,17 @@ def settings(request):
 
 @login_required(login_url='signin')
 def logout(request):
+    #disconect the user and send him on signin
     auth.logout(request)
     return redirect('signin')
 
 
 @login_required
 def newroom(request):
+    #all the thing we can do in newroom
     if request.method == 'POST' :
         if request.POST['form-type'] == 'croom':
+             #create a room and give the creator the owner permission
             roomname = request.POST['roomname']
             room = Room.objects.create(name = roomname)
             perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
@@ -126,6 +134,7 @@ def newroom(request):
             room.save
             return http.HttpResponseRedirect('/room/%i'%room.room_id)
         if request.POST['form-type'] == "jroom":
+            #join a room if the user can and if the room exists
             roomid = request.POST['roomid']
             a = int('0' + roomid)
             user=Profile.objects.get(user=request.user)
@@ -155,9 +164,11 @@ def newroom(request):
 
 @login_required
 def room(request,room_id):
+    #all the thing we can do in newroom
     room=Room.objects.get(room_id=room_id)
     if request.method == 'POST' :
         if request.POST['form-type'] == "msg":
+            #send a message
             mtext = request.POST['message']
             user_profile = Profile.objects.get(user=request.user)
             roomverif=Room.objects.get(room_id=room_id)
@@ -168,8 +179,10 @@ def room(request,room_id):
                 m = Message(recipient=Room.objects.get(room_id=room_id), sender=user_profile,message=texttoemoji(mtext))
                 m.save()
         if request.POST['form-type'] == "logout":
+            #to disconect
             return redirect('logout')
         if request.POST['form-type'] == "jroom":
+            #join a room if the user can and if the room exists
             roomid = request.POST['roomid']
             a = int('0' + roomid)
             user=Profile.objects.get(user=request.user)
@@ -192,6 +205,7 @@ def room(request,room_id):
             aler.info(request, 'oh no this room does not exist, you should create it')
             return redirect('/room/%i'%room.room_id)
         if request.POST['form-type'] == "croom":
+            #create a room and give the creator the owner permission
             roomname = request.POST['roomname']
             room = Room.objects.create(name = roomname)
             perm=Permission.objects.create(level="owner",user=Profile.objects.get(user=request.user),room=room,)
@@ -201,6 +215,7 @@ def room(request,room_id):
      
     u =  Profile.objects.get(user=request.user)
     context = {
+        #all the info room needs
             'room': Room.objects.get(room_id=room_id),
             'mess': Message.objects.filter(recipient_id=room_id),
             'user': u,
@@ -214,6 +229,7 @@ def room(request,room_id):
 
 @login_required
 def getMessages(request, room_id):
+    #get all the messages from a room and send them
     upuser=Profile.objects.get(user=request.user)
     room_details = Room.objects.get(room_id=room_id)
     perm=Permission.objects.get(user=upuser,room=room_details)
@@ -239,6 +255,7 @@ def getMessages(request, room_id):
 
     
 def texttoemoji(text):
+    #change all the emoji and some protection against html injection
     smileystoemojis = {
         ":)": "😊",
         ":(": "☹️",
@@ -260,6 +277,7 @@ def texttoemoji(text):
 
 @login_required
 def admin(request,iduser,roomid ):
+    #change the permission to admin
     
     upuser=Profile.objects.get(id_user=iduser)
     uproom=Room.objects.get(room_id=roomid)
@@ -277,6 +295,7 @@ def admin(request,iduser,roomid ):
 
 @login_required
 def ban(request,iduser,roomid ):
+    #change the permission to ban
     upuser=Profile.objects.get(id_user=iduser)
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
@@ -292,6 +311,7 @@ def ban(request,iduser,roomid ):
 
 @login_required
 def mute(request,iduser,roomid ):
+    #change the permission to mute
     upuser=Profile.objects.get(id_user=iduser)
     uproom=Room.objects.get(room_id=roomid)
     perm=Permission.objects.get(user=upuser,room=uproom)
@@ -315,6 +335,7 @@ def deletemessage(request, messageid):
 
 @login_required
 def openandclose(request, roomid):
+    #close or open a room
     if request.method == 'GET' :
         uproom=Room.objects.get(room_id=roomid)
         n="no"
