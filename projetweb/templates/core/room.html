@@ -50,6 +50,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="logout" />
                             <button type="submit" class="btn-7"> Je me deconecte </button>
+                            {% if perm.level == "owner"  %}
+                                                <a>room open</a>
+                                                <input  type="checkbox" value="YES" id="open" name="lopen" onclick="openandclose({{room.room_id}})" {% if room.open == "yes" %} checked {% endif %} >
+                             {% endif %}
                         </form>
                     </div>
                     
@@ -113,6 +117,19 @@
             </footer>
     </body> 
     <script> 
+        function openandclose(rid) {
+            var a = "/openandclose/"+rid+"";
+            $.ajax({
+                type: 'GET',
+                url : a,
+                success: function(data){
+                
+                },
+                error: function(data){
+                  
+                }
+            });
+        }
     
 
         function admin(uid,rid) {

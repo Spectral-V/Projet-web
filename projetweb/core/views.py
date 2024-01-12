@@ -133,44 +133,30 @@ def newroom(request):
             
             if Room.objects.filter(room_id=a).exists():
                 roomtojoin=Room.objects.get(room_id=a)
-                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
+                if (not Permission.objects.filter(user=user,room=roomtojoin).exists()) and roomtojoin.open == "yes":
                 
             
                     perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
                     perm.save
-                    
-                permi=Permission.objects.get(user=user,room=roomtojoin)
-                if permi.level=="ban":
-                    messages.info(request, 'Too bad, you are ban from this room')
-                    return redirect('newroom')
-                return http.HttpResponseRedirect('/room/%i'%a)
+                if Permission.objects.filter(user=user,room=roomtojoin).exists():
+                    permi=Permission.objects.get(user=user,room=roomtojoin)
+                    if permi.level=="ban":
+                        messages.info(request, 'Too bad, you are ban from this room')
+                        return redirect('newroom')
+                    return http.HttpResponseRedirect('/room/%i'%a)
+                messages.info(request, 'room closed, and you re not in womp womp...')
+                return redirect('newroom')
             messages.info(request, 'oh no this room does not exist, you should create it')
             return redirect('newroom')
             
         
     return render(request, 'core/newroom.html')
 
-def joinroom(a,user,request):
-            
-            roomtojoin=Room.objects.get(room_id=a)
-            if Room.objects.filter(room_id=a).exists():
 
-                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
-                
-            
-                    perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
-                    perm.save()
-                    return http.HttpResponseRedirect('/room/%i'%a)
-                permi=Permission.objects.get(user=user,room=roomtojoin)
-                if permi.level=="ban":
-                    messages.info(request, 'Too bad, you are ban from this room')
-                    return redirect('core/room.html')
-                
-            messages.info(request, 'oh no this room does not exist, you should create it')
-            return redirect('core/newroom.html')
 
 @login_required
 def room(request,room_id):
+    room=Room.objects.get(room_id=room_id)
     if request.method == 'POST' :
         if request.POST['form-type'] == "msg":
             mtext = request.POST['message']
@@ -191,19 +177,21 @@ def room(request,room_id):
             
             if Room.objects.filter(room_id=a).exists():
                 roomtojoin=Room.objects.get(room_id=a)
-                if not Permission.objects.filter(user=user,room=roomtojoin).exists():
+                if (not Permission.objects.filter(user=user,room=roomtojoin).exists()) and roomtojoin.open == "yes":
                 
             
                     perm=Permission.objects.create(level="normal",user=Profile.objects.get(user=request.user),room=roomtojoin,)
                     perm.save
-                    
-                permi=Permission.objects.get(user=user,room=roomtojoin)
-                if permi.level=="ban":
-                    messages.info(request, 'Too bad, you are ban from this room')
-                    return redirect('/room/%i'%room_id)
-                return http.HttpResponseRedirect('/room/%i'%a)
+                if Permission.objects.filter(user=user,room=roomtojoin).exists():
+                    permi=Permission.objects.get(user=user,room=roomtojoin)
+                    if permi.level=="ban":
+                        messages.info(request, 'Too bad, you are ban from this room')
+                        return redirect('/room/%i'%room.room_id)
+                    return http.HttpResponseRedirect('/room/%i'%a)
+                messages.info(request, 'room closed, and you re not in womp womp...')
+                return redirect('/room/%i'%room.room_id)
             messages.info(request, 'oh no this room does not exist, you should create it')
-            return redirect('/room/%i'%room_id)
+            return redirect('/room/%i'%room.room_id)
         if request.POST['form-type'] == "croom":
             roomname = request.POST['roomname']
             room = Room.objects.create(name = roomname)
@@ -310,6 +298,23 @@ def deletemessage(request, messageid):
     if request.method == 'GET' :
         mess = Message.objects.get(message_id=messageid)
         mess.delete()
+    
+    return http.JsonResponse({'status': 'ok'})
+
+@login_required
+def openandclose(request, roomid):
+    if request.method == 'GET' :
+        uproom=Room.objects.get(room_id=roomid)
+        n="no"
+        y="yes"
+        if uproom.open == y:
+                uproom.open = n
+                uproom.save()
+        elif uproom.open == n:
+                uproom.open = y 
+                uproom.save()
+
+        
     
     return http.JsonResponse({'status': 'ok'})
     

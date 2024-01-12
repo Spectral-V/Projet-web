@@ -18,7 +18,8 @@ class Profile(models.Model):
 class Room(models.Model):
     name=models.CharField(max_length=30)
     room_id=models.AutoField(primary_key=True)
-    #perm=models.CharField(default="open",max_length=30)
+    open=models.CharField(max_length=10, default="yes")
+    #yes no
     def __str__(self):
         return self.name
     
@@ -26,6 +27,7 @@ class Permission(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     level = models.CharField(max_length=10, default="normal")
+    #normal owner admin ban mute
     
     
     

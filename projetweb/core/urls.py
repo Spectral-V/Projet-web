@@ -18,4 +18,5 @@ urlpatterns = [
     path('ban/<int:iduser>/<int:roomid>', views.ban, name='ban'),
     path('mute/<int:iduser>/<int:roomid>', views.mute, name='mute'),
     path('deletemessage/<int:messageid>', views.deletemessage, name='deletemessage'),
+    path('openandclose/<int:roomid>', views.openandclose, name='openandclose'),
 ]
