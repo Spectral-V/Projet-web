@@ -26,8 +26,8 @@
                     <input type="text" name="username" class="form" placeholder="Username" />
                     <input type="password" name="password" class="form" placeholder="Password" />
                     <div class="info-in">
-                        {% for message in messages %}
-                        <h5>{{message}}</h5>
+                        {% for e in alers %}
+                        <h5>{{e}}</h5>
                         {% endfor %}
                     </div>
                     <button type="submit" class="btn-1"> Sign In </button>
