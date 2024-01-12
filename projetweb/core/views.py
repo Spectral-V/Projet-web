@@ -141,12 +141,12 @@ def newroom(request):
                 if Permission.objects.filter(user=user,room=roomtojoin).exists():
                     permi=Permission.objects.get(user=user,room=roomtojoin)
                     if permi.level=="ban":
-                        messages.info(request, 'Too bad, you are ban from this room')
+                        aler.info(request, 'Too bad, you are ban from this room')
                         return redirect('newroom')
                     return http.HttpResponseRedirect('/room/%i'%a)
-                messages.info(request, 'room closed, and you re not in womp womp...')
+                aler.info(request, 'room closed, and you re not in womp womp...')
                 return redirect('newroom')
-            messages.info(request, 'oh no this room does not exist, you should create it')
+            aler.info(request, 'oh no this room does not exist, you should create it')
             return redirect('newroom')
             
         
@@ -185,12 +185,12 @@ def room(request,room_id):
                 if Permission.objects.filter(user=user,room=roomtojoin).exists():
                     permi=Permission.objects.get(user=user,room=roomtojoin)
                     if permi.level=="ban":
-                        messages.info(request, 'Too bad, you are ban from this room')
+                        aler.info(request, 'Too bad, you are ban from this room')
                         return redirect('/room/%i'%room.room_id)
                     return http.HttpResponseRedirect('/room/%i'%a)
-                messages.info(request, 'room closed, and you re not in womp womp...')
+                aler.info(request, 'room closed, and you re not in womp womp...')
                 return redirect('/room/%i'%room.room_id)
-            messages.info(request, 'oh no this room does not exist, you should create it')
+            aler.info(request, 'oh no this room does not exist, you should create it')
             return redirect('/room/%i'%room.room_id)
         if request.POST['form-type'] == "croom":
             roomname = request.POST['roomname']
