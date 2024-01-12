@@ -198,7 +198,7 @@ footer{
     text-align: center;
     font-size: 14px;
     cursor: pointer;
-    color: black;
+    color: white;
     bottom: 10px;
     width: 70px;
     text-decoration: underline;
@@ -377,6 +377,7 @@ footer{
     color: white;
     border-radius: 10px;
     float: right;
+    overflow: scroll;
 }
 
 .member h3{
@@ -387,7 +388,6 @@ footer{
 .member h4{
     padding: 7px 7px;
     text-transform: uppercase;
-    overflow: scroll;
 }
 
 .user{
@@ -484,16 +484,52 @@ footer{
 
   .roomlist {
     width: 120px;
-    padding: 10px 10px;
+    padding: 25px 25px;
     height: 200px;
     margin-left: 35px;
     margin-top: 10px;
-    color: black;
+    color: white;
     overflow: scroll;
+    display: inline-block;
+    background-color: rgba(106, 42, 104, 0.786);
+    border: 1px solid black;
+    border-radius: 40px;
+
 
 }
 
 .roomcontainer {
     width: 69px;
 
+}
+
+.inline{
+    display: inline-block;
+    width: 82%;
+}
+
+.form-2{
+    border: 2px solid black;
+    color: black;
+    padding: 5px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 37%;
+    border-radius: 40px;
+}
+
+.btn-12{
+    background-image: linear-gradient(to right, rgb(106, 42, 104),  rgba(106, 42, 104, 0.425));
+    border: none;
+    color: white;
+    padding: 15px 75px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 28px;
+    margin: 10px 35%;
+    cursor: pointer;
+    border-radius: 40px;
 }

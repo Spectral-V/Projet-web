@@ -157,8 +157,15 @@ def newroom(request):
             aler.info(request, 'oh no this room does not exist, you should create it')
             return redirect('newroom')
             
+    u =  Profile.objects.get(user=request.user)
+    context = {
+        #all the info room needs
+            'user': u,
+            'alers': aler.get_messages(request),
+            'permu': Permission.objects.filter(user=u),
+            }
         
-    return render(request, 'core/newroom.html',{'alers': aler.get_messages(request)})
+    return render(request, 'core/newroom.html',context)
 
 
 
