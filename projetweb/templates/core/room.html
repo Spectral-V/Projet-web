@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Pasteque | Le chat ultime</title>
+    <title>Pasteque | The ultimate chat</title>
     <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
@@ -34,7 +34,7 @@
                                     <h5>{{e}}</h5>
                                 {% endfor %}
                             </div>
-                            <button type="submit" class="btn-7"> Je rejoins un salon </button>
+                            <button type="submit" class="btn-7"> I join a room </button>
                         </form>
                     </div>
                     <div class="select-room">
@@ -42,16 +42,16 @@
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="croom" />
                             <input type="text" name="roomname" class="form-tag" placeholder="Nom du salon" />
-                            <button type="submit" class="btn-7"> Je crée un salon </button>
+                            <button type="submit" class="btn-7"> I create a room </button>
                         </form>
                     </div>
                     <div class="logout">
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form-type" value="logout" />
-                            <button type="submit" class="btn-7"> Je me deconecte </button>
+                            <button type="submit" class="btn-7"> I log out </button>
                             {% if perm.level == "owner"  %}
-                                                <a>room open</a>
+                                                <a>room open :</a>
                                                 <input  type="checkbox" value="YES" id="open" name="lopen" onclick="openandclose({{room.room_id}})" {% if room.open == "yes" %} checked {% endif %} >
                              {% endif %}
                         </form>
@@ -65,19 +65,19 @@
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="msg" />
                         <input type="text" name="message" class="msg-write" placeholder="Tapez votre message" />
-                        <button type="submit" class="btn-6"> Envoyer un message </button>
+                        <button type="submit" class="btn-6"> Send a text </button>
                     </form>
                 </div>
                 <div class="member">
-                    <h3> Membres : </h3>
+                    <h3> Members : </h3>
                     {% for p in permr %}
                             {% if p.level == "owner" %}
-                                <h4> Créateur : </h4>
+                                <h4> Owner : </h4>
                                 <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
                                 <div class="user"> {{p.user}} </div>
                             {% endif %}
                     {% endfor %}
-                    <h4> Utilisateur : </h4>
+                    <h4> Users: </h4>
                     {% for p in permr %}
                             {% if p.level == "admin" %}
                                 <div class="upp"> <img width="25" height="25" src="{{p.user.profileimg.url}}" class="userimg"></div>
@@ -113,7 +113,7 @@
                 </div>
             </section>
             <footer>
-                <p>Crée par Victor Murris Rémi Routier et Matthis Lahargoue</p>
+                <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>
             </footer>
     </body> 
     <script> 

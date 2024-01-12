@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Pasteque | Le chat ultime</title>
+    <title>Pasteque | The ultimate chat</title>
     <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
 </head>
@@ -17,7 +17,7 @@
             </div>
         </header>
             <section>
-                <h2>INSCRIPTION</h2>
+                <h2>REGISTRATION</h2>
                 
                 <form action="" method="POST">
                     {% csrf_token %}
@@ -30,22 +30,22 @@
                         <h5>{{e}}</h5>
                         {% endfor %}
                     </div>
-                    <button type="submit" class="btn-1"> Incris toi </button>
+                    <button type="submit" class="btn-1"> Sign in </button>
                 </form>
                 <div class="little-text">
-                    <p>déjà de compte, pas d'inquiétude,<a href="signin"> Connecte toi</a></p>
+                    <p>Already got an account ? No problems<a href="signin"> Sign in !</a></p>
                 </div>
                 <div class="little-text">
-                    <p>Votre mot de passe doit contenir : </p>
+                    <p>Your password need : </p>
                     <ul>
-                        <li>Au minimun 8 caractères</li>
-                        <li>Une majuscule</li>
-                        <li>Un chiffre</li>
+                        <li>At least 8 character</li>
+                        <li>A capital letter</li>
+                        <li>A number</li>
                     </ul>
                 </div>
             </section>
             <footer>
-                <p>Crée par Victor Murris Rémi Routier et Matthis Lahargoue</p>
+                <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>
             </footer>
     </body> 
     

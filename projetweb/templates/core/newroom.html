@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Pasteque | Le chat ultime</title>
+    <title>Pasteque | The ultimate chat</title>
     <link rel="icon" href="media/media/icon.png" sizes="32x32" type="image/png"/>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     
@@ -23,7 +23,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="form-type" value="croom" />
                         <input type="text" name="roomname" class="form" placeholder="Nom du Salon" />
-                        <button type="submit" class="btn-1"> Je cree un salon </button>
+                        <button type="submit" class="btn-1"> I create a room </button>
     
                     </form>
                 </div>
@@ -37,13 +37,13 @@
                                 <h5>{{e}}</h5>
                             {% endfor %}
                         </div>
-                        <button type="submit" class="btn-1"> Je rejoins un salon </button>
+                        <button type="submit" class="btn-1"> I join a room </button>
     
                     </form>
                 </div>
             </section>
             <footer>
-                <p>Crée par Victor Murris Rémi Routier et Matthis Lahargoue</p>
+                <p>Create by Victor Murris and Rémi and Routier and Matthis Lahargoue &#169</p>
             </footer>
     </body> 
     
