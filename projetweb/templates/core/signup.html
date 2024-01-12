@@ -18,23 +18,27 @@
         </header>
             <section>
                 <h2>REGISTRATION</h2>
-                
+                <!--Form to enter username email and password-->
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="text" name="username" class="form" placeholder="Username" />
                     <input type="text" name="email"class="form" placeholder="Email" />
                     <input type="password" name="password" class="form"  placeholder="Password" />
                     <input type="password" name="password2" class="form"  placeholder="Confirm Password" />
+                    <!--Display of the info in case of fail-->
                     <div class="info-up">
                         {% for e in alers %}
                         <h5>{{e}}</h5>
                         {% endfor %}
                     </div>
+                    <!--Send the data to the view-->
                     <button type="submit" class="btn-1"> Sign in </button>
                 </form>
+                <!--Go to signin if already an account-->
                 <div class="little-text">
                     <p>Already got an account ? No problems<a href="signin"> Sign in !</a></p>
                 </div>
+                <!--Password info-->
                 <div class="little-text">
                     <p>Your password need : </p>
                     <ul>

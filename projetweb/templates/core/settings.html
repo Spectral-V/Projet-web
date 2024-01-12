@@ -15,6 +15,7 @@
         <header>
             <div class="header-div">
                 <a href=""><img width="200" height="75" src="{% static 'img/logo.png' %}" /> </a>
+                <!--Little button to settings-->
                 <a href="settings" class="sett"><img width="40" height="40" src="{% static 'img/setting.png' %}"/> </a>
             </div>
         </header>
@@ -22,6 +23,7 @@
                 <div>
                     <h2> User Settings </h2>
                 </div>
+                <!-- Left panel where we can go to newroom-->
                 <div class="left-panel">
                     <div class="select-room">
                         <form action="" method="POST">
@@ -31,6 +33,7 @@
                         </form>
                     </div>
                 </div>
+                <!-- Parameters panel with profile picture upload and bio update-->
                 <div id="param">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -47,10 +50,12 @@
                             </div> 
                        <div>
                            <button class="btn-5"> <a href="/">Cancel</a> </button>
+                           <!--Send the data from the profile picture and the bio-->
                            <button type="submit" class="btn-5"> Save </button>
                        </div>
                     </form>
                     <div>
+                        <!-- Button witch redirect to logout-->
                         <button class="btn-5"> <a href="logout">logout</a> </button>
                     </div>
                 </div>
