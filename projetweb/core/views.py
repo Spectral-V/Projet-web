@@ -214,22 +214,27 @@ def room(request,room_id):
 
 @login_required
 def getMessages(request, room_id):
+    upuser=Profile.objects.get(user=request.user)
     room_details = Room.objects.get(room_id=room_id)
-    if request.method == 'GET':
-        mess = Message.objects.filter(recipient=room_details)
-        list = []
-        for m in mess:
-            list.append({
-                'senderid': m.sender.id_user,
-                'sender': m.sender.user.username,
-                'message': m.message,
-                'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
-                'id': m.message_id,
-                'roomid': room_id,
+    perm=Permission.objects.get(user=upuser,room=room_details)
+    if perm.level!="ban":
+        
+            if request.method == 'GET':
+                mess = Message.objects.filter(recipient=room_details)
+                list = []
+            for m in mess:
+                list.append({
+                    'senderid': m.sender.id_user,
+                    'sender': m.sender.user.username,
+                    'message': m.message,
+                    'date': m.date.strftime("%d/%m/%Y %H:%M:%S"),
+                    'id': m.message_id,
+                    'roomid': room_id,
                 
-            })
+                 })
     
-    return JsonResponse({"mess":list})
+            return JsonResponse({"mess":list})
+    return http.JsonResponse({'status': 'ok'})
 
 
     
